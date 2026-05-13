@@ -56,7 +56,7 @@ export function Navbar() {
           </button>
           
           <div className="hidden items-center gap-4 text-sm font-medium text-[#3D6B4F] sm:flex">
-            <Link href="/tools/pdf-merge" className="transition-colors hover:text-[#0A2415]">
+            <Link href="/tools" className="transition-colors hover:text-[#0A2415]">
               Tools
             </Link>
             <Link href="/about" className="transition-colors hover:text-[#0A2415]">
