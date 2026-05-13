@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #0A0A0F;
+    --surface: #111118;
+    --surface-2: #16161F;
+    --border: #1E1E2E;
+    --border-soft: rgba(255, 255, 255, 0.06);
+    --accent: #6366F1;
+    --accent-soft: #4F46E5;
+    --violet: #A78BFA;
+    --amber: #F59E0B;
+    --success: #10B981;
+    --danger: #EF4444;
+    --text: #F1F5F9;
+    --text-muted: #64748B;
+    --text-faint: #334155;
+  }
+
+  body {
+    @apply bg-background text-text antialiased font-sans selection:bg-accent/30;
+    /* Dark theme only */
+    color-scheme: dark;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-[linear-gradient(135deg,var(--accent),var(--violet))] bg-clip-text text-transparent;
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .card-premium {
+    @apply bg-surface border border-border-soft rounded-xl backdrop-blur-md transition-all duration-300;
+  }
+
+  .card-premium:hover {
+    @apply border-accent/30 -translate-y-[2px] shadow-[0_8px_32px_rgba(99,102,241,0.1)];
+  }
+
+  .pill-badge {
+    @apply rounded-full text-[10px] font-medium px-2.5 py-0.5 tracking-wide;
+  }
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-2);
+}
