@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import removeBackground from '@imgly/background-removal';
+import { removeBackground } from '@imgly/background-removal';
 import { DropZone } from '@/components/ui/DropZone';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';

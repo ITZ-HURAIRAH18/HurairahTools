@@ -1,120 +1,381 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useEffect, useRef } from 'react'
 
-const stats = [
-  '47 Tools',
-  '0 Uploads',
-  '100% Private',
-  'Free Forever',
-];
+function Hero() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
-};
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
-export function Hero() {
-  const scrollToGrid = () => {
-    document.getElementById('tool-grid')?.scrollIntoView({ behavior: 'smooth' });
-  };
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1
+      canvas.width = canvas.offsetWidth * dpr
+      canvas.height = canvas.offsetHeight * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+    const BASE_COLOR = [26, 107, 58]
 
-  const scrollToHow = () => {
-    document.getElementById('why-unitoolkit')?.scrollIntoView({ behavior: 'smooth' });
-  };
+    type Particle = {
+      x: number
+      y: number
+      radius: number
+      phase: number
+      speed: number
+      drift: number
+      distFromCenter: number
+    }
+
+    const buildParticles = (): Particle[] => {
+      const particles: Particle[] = []
+      const width = canvas.offsetWidth
+      const height = canvas.offsetHeight
+      const cx = width / 2
+      const cy = height * 0.46
+      const maxDist = Math.sqrt(cx * cx + height * height)
+      const count = Math.max(28, Math.floor(width / 24))
+
+      for (let i = 0; i < count; i++) {
+        const side = i % 2 === 0 ? 'left' : 'right'
+        const edgeX = side === 'left'
+          ? Math.random() * width * 0.32
+          : width - Math.random() * width * 0.32
+        const y = Math.random() * height
+        const dx = edgeX - cx
+        const dy = y - cy
+        const dist = Math.sqrt(dx * dx + dy * dy)
+
+        particles.push({
+          x: edgeX,
+          y,
+          radius: 12 + Math.random() * 28,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.25 + Math.random() * 0.45,
+          drift: 6 + Math.random() * 16,
+          distFromCenter: dist / maxDist,
+        })
+      }
+
+      return particles
+    }
+
+    resize()
+    let particles = buildParticles()
+
+    const handleResize = () => {
+      resize()
+      particles = buildParticles()
+    }
+    window.addEventListener('resize', handleResize)
+
+    let frame = 0
+    let animId: number
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      const t = frame * 0.012
+      const width = canvas.offsetWidth
+      const height = canvas.offsetHeight
+
+      ctx.save()
+      ctx.filter = 'blur(14px)'
+      ctx.lineCap = 'round'
+
+      for (let i = 0; i < 5; i++) {
+        const y = height * (0.18 + i * 0.16) + Math.sin(t * 0.8 + i * 1.7) * 18
+        const wave = Math.sin(t * 0.7 + i) * 80
+        const opacity = 0.09 + Math.sin(t * 0.9 + i * 0.8) * 0.025
+
+        ctx.beginPath()
+        ctx.moveTo(-120, y)
+        ctx.bezierCurveTo(
+          width * 0.25,
+          y - 90 + wave,
+          width * 0.7,
+          y + 95 - wave,
+          width + 120,
+          y + Math.cos(t + i) * 35
+        )
+        ctx.strokeStyle = `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, ${opacity})`
+        ctx.lineWidth = 30 + i * 4
+        ctx.stroke()
+      }
+
+      ctx.restore()
+
+      for (const particle of particles) {
+        const edgeFactor = Math.max(0, (particle.distFromCenter - 0.18) / 0.82)
+        const pulse = Math.sin(t * particle.speed + particle.phase) * 0.5 + 0.5
+        const opacity = edgeFactor * (0.08 + pulse * 0.14)
+
+        if (opacity < 0.015) continue
+
+        const x = particle.x + Math.cos(t * particle.speed + particle.phase) * particle.drift * edgeFactor
+        const y = particle.y + Math.sin(t * particle.speed + particle.phase) * particle.drift * edgeFactor
+        const radius = particle.radius * (0.9 + pulse * 0.25)
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius)
+
+        gradient.addColorStop(0, `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, ${opacity})`)
+        gradient.addColorStop(0.55, `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, ${opacity * 0.35})`)
+        gradient.addColorStop(1, `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, 0)`)
+
+        ctx.fillStyle = gradient
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      frame++
+      animId = requestAnimationFrame(draw)
+    }
+
+    draw()
+
+    return () => {
+      cancelAnimationFrame(animId)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   return (
-    <section className="relative flex min-h-[85vh] w-full flex-col items-center justify-center overflow-hidden bg-background px-4 py-20 text-center sm:px-6 lg:px-8">
-      {/* Background patterns */}
-      <div className="absolute inset-0 z-0 bg-dot-pattern opacity-50"></div>
-      
-      {/* Aurora blob */}
-      <div className="absolute left-1/2 top-1/2 z-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.15)_0%,rgba(0,0,0,0)_70%)] blur-[80px]"></div>
+    <section
+      style={{
+        position: 'relative',
+        width: '100%',
+        backgroundColor: '#F0F9F2',
+        paddingTop: '88px',
+        paddingBottom: '80px',
+        paddingLeft: '24px',
+        paddingRight: '24px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        overflow: 'hidden',
+        minHeight: '520px',
+      }}
+    >
+      {/* LAYER 0: Animated soft background — full section behind everything */}
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
 
-      <div className="relative z-10 flex max-w-4xl flex-col items-center gap-8">
+      {/* LAYER 1: Radial fade overlay — keeps the center clean where text lives */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: `radial-gradient(
+            ellipse 58% 48% at 50% 45%,
+            #F0F9F2 0%,
+            rgba(240, 249, 242, 0.96) 24%,
+            rgba(240, 249, 242, 0.62) 48%,
+            rgba(240, 249, 242, 0.16) 70%,
+            transparent 100%
+          )`,
+          zIndex: 1,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* LAYER 2: All hero content — fully above dots and overlay */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          width: '100%',
+          maxWidth: '680px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+
         {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent"
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: '#FFFFFF',
+            border: '1.5px solid #C4E0CA',
+            borderRadius: '999px',
+            padding: '6px 16px',
+            marginBottom: '28px',
+            boxShadow: '0 1px 6px rgba(26,107,58,0.08)',
+          }}
         >
-          <Sparkles className="h-4 w-4" />
-          <span>47 Free Tools — No Signup Required</span>
-        </motion.div>
+          <span
+            style={{
+              width: '7px',
+              height: '7px',
+              borderRadius: '50%',
+              background: '#1A6B3A',
+              display: 'inline-block',
+              flexShrink: 0,
+            }}
+          />
+          <span
+            style={{
+              fontSize: '13px',
+              fontWeight: 600,
+              color: '#1A6B3A',
+              letterSpacing: '0.1px',
+            }}
+          >
+            47 Free Tools — No Signup Required
+          </span>
+        </div>
 
-        {/* Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-[80px] lg:leading-[1.1]"
+        {/* H1 */}
+        <h1
+          style={{
+            fontFamily: 'var(--font-bricolage)',
+            fontSize: 'clamp(38px, 5.5vw, 68px)',
+            fontWeight: 800,
+            lineHeight: 1.08,
+            letterSpacing: '-1.5px',
+            marginBottom: '20px',
+          }}
         >
-          Every tool a student <br className="hidden sm:block" />
-          <span className="text-gradient">actually needs.</span>
-        </motion.h1>
+          <span style={{ color: '#0A2415', display: 'block' }}>
+            Every tool a student
+          </span>
+          <span style={{ color: '#1A6B3A', display: 'block' }}>
+            actually needs.
+          </span>
+        </h1>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-2xl text-lg text-text-muted sm:text-xl"
+        <p
+          style={{
+            fontSize: '17px',
+            color: '#4A6B55',
+            lineHeight: 1.65,
+            textAlign: 'center',
+            maxWidth: '500px',
+            margin: '0 auto 32px',
+            fontWeight: 400,
+          }}
         >
-          PDF, image, developer, and university utilities. All run in your browser. 
-          Your files never leave your device.
-        </motion.p>
+          PDF, image, developer, and university utilities. All run in
+          your browser. Your files never leave your device.
+        </p>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col items-center gap-4 w-full sm:w-auto sm:flex-row"
+        {/* CTA Buttons */}
+        <div
+          style={{
+            display: 'flex',
+            gap: '12px',
+            justifyContent: 'center',
+            marginBottom: '44px',
+            flexWrap: 'wrap',
+          }}
         >
           <button
-            onClick={scrollToGrid}
-            className="group flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-base font-semibold text-white transition-all hover:bg-accent-soft hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] sm:w-auto"
+            style={{
+              background: '#1A6B3A',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '9px',
+              padding: '13px 26px',
+              fontSize: '15px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              letterSpacing: '-0.2px',
+              boxShadow: '0 2px 12px rgba(26,107,58,0.25)',
+            }}
           >
-            Browse Tools
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            Browse Tools →
           </button>
+
           <button
-            onClick={scrollToHow}
-            className="flex w-full items-center justify-center rounded-xl border border-border bg-surface/50 px-8 py-4 text-base font-medium text-text transition-colors hover:bg-surface-2 sm:w-auto"
+            style={{
+              background: '#FFFFFF',
+              color: '#1A6B3A',
+              border: '1.5px solid #B8D9BF',
+              borderRadius: '9px',
+              padding: '13px 26px',
+              fontSize: '15px',
+              fontWeight: 500,
+              cursor: 'pointer',
+            }}
           >
             How it works ↓
           </button>
-        </motion.div>
+        </div>
 
         {/* Stats Row */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-text-muted sm:mt-16 sm:gap-x-12"
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '12px',
+            flexWrap: 'wrap',
+          }}
         >
-          {stats.map((stat, i) => (
-            <motion.div key={stat} variants={itemVariants} className="flex items-center gap-2">
-              {i > 0 && <span className="hidden h-1 w-1 rounded-full bg-border sm:block"></span>}
-              <span>{stat}</span>
-            </motion.div>
+          {[
+            { num: '47',    label: 'Tools'   },
+            { num: '0',     label: 'Uploads' },
+            { num: '100%',  label: 'Private' },
+            { num: 'Free',  label: 'Forever' },
+          ].map((stat, i, arr) => (
+            <div
+              key={stat.label}
+              style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  gap: '4px',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    color: '#0A2415',
+                    fontFamily: 'var(--font-bricolage)',
+                  }}
+                >
+                  {stat.num}
+                </span>
+                <span
+                  style={{
+                    fontSize: '13px',
+                    color: '#4A6B55',
+                    fontWeight: 400,
+                  }}
+                >
+                  {stat.label}
+                </span>
+              </div>
+              {i < arr.length - 1 && (
+                <span style={{ color: '#B8D9BF', fontSize: '16px' }}>·</span>
+              )}
+            </div>
           ))}
-        </motion.div>
+        </div>
+
       </div>
     </section>
-  );
+  )
 }
+
+export default Hero
+export { Hero }

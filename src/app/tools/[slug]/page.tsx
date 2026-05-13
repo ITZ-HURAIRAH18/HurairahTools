@@ -54,6 +54,18 @@ const componentMap: Record<string, any> = {
   'code-formatter': dynamic(() => import('@/components/tools/developer/CodeFormatter').then(mod => mod.CodeFormatter)),
   'css-minifier': dynamic(() => import('@/components/tools/developer/CssMinifier').then(mod => mod.CssMinifier)),
   'html-minifier': dynamic(() => import('@/components/tools/developer/HtmlMinifier').then(mod => mod.HtmlMinifier)),
+
+  // University Tools
+  'gpa-calculator': dynamic(() => import('@/components/tools/university/GpaCalculator')),
+  'deadline-tracker': dynamic(() => import('@/components/tools/university/DeadlineTracker')),
+  'citation-generator': dynamic(() => import('@/components/tools/university/CitationGenerator')),
+  'plagiarism-checker': dynamic(() => import('@/components/tools/university/PlagiarismChecker')),
+  'word-counter': dynamic(() => import('@/components/tools/university/WordCounter')),
+  'pomodoro-timer': dynamic(() => import('@/components/tools/university/PomodoroTimer')),
+  'unit-converter': dynamic(() => import('@/components/tools/university/UnitConverter')),
+  'equation-evaluator': dynamic(() => import('@/components/tools/university/EquationEvaluator')),
+  'resume-builder': dynamic(() => import('@/components/tools/university/ResumeBuilder')),
+  'timetable-builder': dynamic(() => import('@/components/tools/university/TimetableBuilder')),
 };
 
 export function generateStaticParams() {

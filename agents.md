@@ -28,54 +28,138 @@ Every single tool runs inside the browser tab using:
 Tagline: "Every tool a student actually needs. All in one tab. Forever free."
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎨 DESIGN SYSTEM (MANDATORY — DO NOT DEVIATE)
+🎨 DESIGN SYSTEM — CLEAN WHITE + GREEN SAAS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-This must look like a premium SaaS product (Linear.app, Raycast, Vercel Dashboard).
-NOT generic. NOT AI-generated looking. NOT blue-purple gradient on white.
+Theme: Light. Clean. Crisp. Like Notion meets Linear — but green.
+NOT dark. NOT blue-purple. NOT generic AI gradient aesthetic.
 
-COLORS (define as CSS variables in globals.css):
-  --bg:          #0A0A0F
-  --surface:     #111118
-  --surface-2:   #16161F
-  --border:      #1E1E2E
-  --border-soft: rgba(255,255,255,0.06)
-  --accent:      #6366F1   ← Indigo (primary)
-  --accent-soft: #4F46E5
-  --violet:      #A78BFA   ← Secondary
-  --amber:       #F59E0B   ← University tools highlight
-  --success:     #10B981
-  --danger:      #EF4444
-  --text:        #F1F5F9
-  --text-muted:  #64748B
-  --text-faint:  #334155
+CSS VARIABLES (globals.css):
+  --bg:             #F8FAF7      ← off-white with green tint
+  --surface:        #FFFFFF      ← pure white cards
+  --surface-2:      #F0F7F1      ← light green-gray for sidebar
+  --border:         #E0EDE2      ← soft green-tinted border
+  --border-soft:    #EBF5EC      ← hover border
+  --accent:         #1A6B3A      ← deep forest green (primary)
+  --accent-light:   #EAF5EC      ← green tint background
+  --accent-mid:     #2D8A50      ← hover state green
+  --amber:          #D97706      ← university tools accent
+  --amber-light:    #FFFBF0      ← amber section background
+  --amber-border:   #F0DFA0      ← amber border
+  --success:        #16A34A
+  --danger:         #DC2626
+  --info:           #2563EB
+  --text:           #0A2415      ← near-black with green tone
+  --text-muted:     #4A6B55      ← muted green-gray
+  --text-faint:     #7A9B82      ← faint labels
 
-FONTS (load via next/font or @import from Google Fonts):
-  Display:    "Bricolage Grotesque" (weights 400, 600, 800)
-  Body:       "DM Sans" (weights 400, 500)
-  Mono:       "JetBrains Mono" (weights 400, 600)
+FONTS (next/font — Google Fonts):
+  Display:  "Bricolage Grotesque" (weights 400, 600, 800)
+            → All headings, logo, hero H1
+  Body:     "DM Sans" (weights 400, 500)
+            → All body text, tool descriptions
+  Mono:     "JetBrains Mono" (weights 400, 600)
+            → Code tools, hash outputs, JWT decoder
 
-VISUAL RULES:
-  - Dark theme only. No light mode toggle needed.
-  - Cards: background var(--surface), border 1px solid var(--border-soft),
-    border-radius 12px, backdrop-filter blur(8px)
-  - On card hover: border brightens to rgba(99,102,241,0.3), subtle translateY(-2px),
-    box-shadow 0 8px 32px rgba(99,102,241,0.1)
-  - Hero background: CSS dot-grid pattern (radial-gradient dots, no image)
-  - Gradient text: background: linear-gradient(135deg, #6366F1, #A78BFA);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent
-  - Pill badges: rounded-full, tiny text, colored background at 15% opacity
-  - All icons: Lucide React exclusively. No emoji. No Heroicons.
-  - Animations: Framer Motion for mount/unmount. CSS transitions for hover.
-  - Tool cards show: icon, name, one-liner, category badge, "Local" pill
-  - Sidebar active item: left border 2px solid var(--accent), bg var(--surface-2)
+LOGO:
+  - Square mark: 28×28px, bg #1A6B3A, radius 7px,
+    white "H" in Bricolage Grotesque 700
+  - Text: "Hurairah" in #1A6B3A weight 700
+          "Tools" in #4A6B55 weight 400
 
-NEVER USE:
-  Inter font, Roboto, system-ui, Arial
-  Purple gradient on white/light background
-  Generic shadcn default styling without customization
-  Cookie-cutter layouts copied from any template
+NAVBAR:
+  background: #FFFFFF
+  border-bottom: 1px solid #E4EDE0
+  height: 52px
+  Nav links: 12px, color #4A6B55, hover bg #EBF5EC radius 6px
+  Search bar: bg #F0F7F1, border #D0E8D4, radius 8px
+  CMD+K badge: white bg, border #D0E8D4, text #7A9B82
+  CTA button: bg #1A6B3A, white text, radius 7px
 
+HERO SECTION:
+  background: linear-gradient(160deg, #F0F9F2, #E8F5EA, #F5FBF0)
+  Dot grid: radial-gradient(circle, rgba(26,107,58,0.13) 1px, transparent 1px)
+            background-size: 22px 22px
+  Badge pill: white bg, border #C4E0CA, text #1A6B3A
+  H1: 64px, Bricolage Grotesque 800, color #0A2415,
+      keyword in #1A6B3A (no gradient needed — solid green pops)
+  Subtitle: 18px, DM Sans 400, color #4A6B55
+  CTA Primary: bg #1A6B3A, white, radius 8px, padding 10px 22px
+  CTA Ghost: bg white, border 1.5px #B8D9BF, text #1A6B3A
+
+TOOL CARDS:
+  background: #FFFFFF
+  border: 1px solid #E0EDE2
+  border-radius: 10px
+  padding: 16px
+  On hover: border-color #1A6B3A, translateY(-1px),
+            box-shadow: 0 4px 16px rgba(26,107,58,0.08)
+  Icon container: 36×36px, border-radius 8px
+    PDF tools:       bg #EAF5EC, icon color #1A6B3A
+    Image tools:     bg #E8F1FB, icon color #2563EB
+    Developer tools: bg #FEF3E2, icon color #D97706
+    Uni tools:       bg #FDE8E8, icon color #DC2626
+  "Local" pill badge: bg #EAF5EC, text #1A6B3A,
+                       border #C4E0CA, 9px font, rounded-full
+  Tool name: 13px, weight 600, color #0A2415
+  Description: 12px, color #6B8F74, line-height 1.5
+
+SIDEBAR (tool pages):
+  background: #F0F7F1
+  border-right: 1px solid #E0EDE2
+  width: 220px
+  Active item: border-left 2px solid #1A6B3A,
+               bg #EAF5EC, text #0A2415 weight 600
+  Inactive item: text #4A6B55, hover bg #E4F0E6
+  Bottom trust badge: bg white, border #C4E0CA,
+                      text #1A6B3A, "🔒 Local Only"
+
+FILTER TABS (Category Pills):
+  Active:   bg #1A6B3A, text white, no border
+  Inactive: bg white, border #D8ECD9, text #4A6B55
+  Font: 11px, weight 500, rounded-full, padding 5px 14px
+
+UNIVERSITY SECTION:
+  Amber theme: bg #FFFBF0, border #F0DFA0
+  Cards: white bg, border #ECD99A
+  Hover: border #D4A017
+  Badge: bg #FEF3C7, text #92660A, border #F0DFA0
+  Heading text: #3D2800
+
+SECTION LABELS:
+  font-size: 11px
+  font-weight: 600
+  color: #7A9B82
+  letter-spacing: 0.6px
+  text-transform: uppercase
+
+TRUST BANNER (bottom strip):
+  background: #0A2415     ← ONLY dark element on the page
+  text: #6DBB8A
+  "Built with ❤️ by M Abu Hurairah" → #2D7A4F, right-aligned
+
+FOOTER:
+  background: #FFFFFF
+  border-top: 1px solid #E0EDE2
+  Logo + tagline left
+  Links center: color #4A6B55, hover #1A6B3A
+  Copyright bottom: color #7A9B82
+  "Built with ❤️ by M Abu Hurairah" → color #1A6B3A
+
+ANIMATIONS (Framer Motion):
+  Tool grid filter change: AnimatePresence + stagger 0.04s
+  Card mount: initial opacity 0, y 12 → animate opacity 1, y 0
+  Hero stats: stagger-in with 0.1s delay each
+  Sidebar item: no animation (keep snappy)
+
+NEVER USE IN THIS PROJECT:
+  Dark backgrounds (except the one trust banner strip)
+  Any shade of navy, indigo, or purple
+  White text on colored backgrounds (except dark strip + buttons)
+  Inter, Roboto, system-ui, Arial
+  Box shadows heavier than rgba(26,107,58,0.10)
+  Gradient text effects (solid #1A6B3A is enough)
+  Generic AI card layouts with center-aligned icon grids
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📁 PROJECT STRUCTURE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

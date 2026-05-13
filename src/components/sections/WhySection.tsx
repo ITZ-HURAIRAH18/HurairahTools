@@ -20,21 +20,21 @@ const features = [
 
 export function WhySection() {
   return (
-    <section id="why-unitoolkit" className="w-full bg-background px-4 py-24 sm:px-6 lg:px-8">
+    <section id="why-unitoolkit" className="w-full bg-[#F8FAF7] px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-16">
-          <h2 className="font-display text-3xl font-bold text-text sm:text-4xl">Why use UniToolKit?</h2>
-          <p className="mt-4 text-lg text-text-muted">Fast, free, and incredibly secure.</p>
+          <h2 className="font-display text-4xl font-bold text-[#0A2415] sm:text-5xl">Why use UniToolKit?</h2>
+          <p className="mt-4 text-lg text-[#4A6B55]">Fast, free, and incredibly secure.</p>
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {features.map((feature, index) => (
-            <div key={index} className="flex flex-col items-center text-center p-6 rounded-2xl bg-surface-2 border border-border-soft">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--accent),var(--violet))] shadow-[0_0_20px_rgba(99,102,241,0.3)]">
-                <feature.icon className="h-8 w-8 text-white" />
+            <div key={index} className="flex flex-col items-center text-center p-8 rounded-xl bg-white border border-[#E0EDE2] hover:border-[#1A6B3A] transition-colors">
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-[#EAF5EC]">
+                <feature.icon className="h-7 w-7 text-[#1A6B3A]" />
               </div>
-              <h3 className="mb-3 font-display text-xl font-bold text-text">{feature.title}</h3>
-              <p className="text-text-muted leading-relaxed">{feature.description}</p>
+              <h3 className="mb-3 font-display text-lg font-bold text-[#0A2415]">{feature.title}</h3>
+              <p className="text-[#4A6B55] leading-relaxed text-sm">{feature.description}</p>
             </div>
           ))}
         </div>

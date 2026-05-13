@@ -1,13 +1,35 @@
 'use client';
 
 import React, { useState } from 'react';
-import { minify } from 'html-minifier-terser';
 import { Card } from '@/components/ui/Card';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import { useClipboard } from '@/hooks/useClipboard';
 import { downloadBlob, formatBytes } from '@/lib/utils';
-import { Code, Copy, Download, Zap } from 'lucide-react';
+import { Code, Copy, Download } from 'lucide-react';
+
+// Browser-compatible HTML minifier
+function minifyHtml(html: string): string {
+  let result = html
+    // Remove HTML comments
+    .replace(/<!--[\s\S]*?-->/g, '')
+    // Remove doctype and XML declarations
+    .replace(/<\?[\s\S]*?\?>/g, '')
+    // Remove whitespace between tags
+    .replace(/>\s+</g, '><')
+    // Remove trailing whitespace before closing tags
+    .replace(/\s+</g, ' <')
+    // Collapse multiple spaces (but keep at least one between words)
+    .replace(/\s{2,}/g, ' ')
+    // Remove space before self-closing tags
+    .replace(/\s+\/>/g, '/>')
+    // Remove space around = in attributes
+    .replace(/\s*=\s*/g, '=')
+    // Trim leading/trailing whitespace
+    .trim();
+
+  return result;
+}
 
 export function HtmlMinifier() {
   const [input, setInput] = useState('');
@@ -17,36 +39,14 @@ export function HtmlMinifier() {
   
   const { copiedText, copyWithFeedback } = useClipboard();
 
-  const handleMinify = async () => {
+  const handleMinify = () => {
     if (!input.trim()) return;
     
     setIsProcessing(true);
     setError(null);
     
     try {
-      // Use html-minifier-terser
-      // Note: in a true browser environment, html-minifier-terser might require a specific browser build
-      // If it fails, we fall back to a basic regex minifier.
-      let minified = '';
-      try {
-        minified = await minify(input, {
-          collapseWhitespace: true,
-          removeComments: true,
-          removeAttributeQuotes: true,
-          minifyJS: true,
-          minifyCSS: true,
-          removeOptionalTags: true,
-        });
-      } catch (terserErr) {
-        // Basic fallback regex minifier if the library throws in the browser context
-        console.warn("html-minifier-terser failed, falling back to regex minify", terserErr);
-        minified = input
-          .replace(/<!--[\s\S]*?-->/g, '') // Remove comments
-          .replace(/>\s+</g, '><') // Remove space between tags
-          .replace(/\s{2,}/g, ' ') // Collapse multiple spaces
-          .trim();
-      }
-
+      const minified = minifyHtml(input);
       setOutput(minified);
     } catch (err: any) {
       setError(err.message || "Failed to minify HTML.");

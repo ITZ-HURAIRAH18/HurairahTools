@@ -1,310 +1,54 @@
- bn
- "K
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- " "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.35"
+{
+  "name": "unitoolkit",
+  "version": "1.0.0",
+  "description": "A free, privacy-first browser toolkit for university students",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "tailwindcss": "^3.3.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "latest",
+    "cmdk": "latest",
+    "pdf-lib": "^1.17.0",
+    "pdfjs-dist": "^4.0.0",
+    "docx": "^8.0.0",
+    "xlsx": "^0.18.0",
+    "browser-image-compression": "^2.0.0",
+    "react-image-crop": "^10.0.0",
+    "heic2any": "^0.0.4",
+    "exifr": "^7.1.0",
+    "@imgly/background-removal": "^1.4.0",
+    "jszip": "^3.10.0",
+    "mathjs": "^12.0.0",
+    "react-markdown": "^9.0.0",
+    "remark-gfm": "^4.0.0",
+    "diff": "^5.1.0",
+    "cronstrue": "^2.26.0",
+    "cron-parser": "^4.8.0",
+    "crypto-js": "^4.1.0",
+    "prettier": "^3.0.0",
+    "html-minifier-terser": "^7.2.0",
+    "jspdf": "^2.5.0",
+    "html2canvas": "^1.4.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0",
+    "zustand": "^4.4.0",
+    "date-fns": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/node": "^20.0.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
   }
 }
