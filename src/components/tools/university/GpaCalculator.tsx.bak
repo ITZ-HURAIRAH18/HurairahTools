@@ -98,12 +98,11 @@ export default function GpaCalculator() {
   const [showSettings, setShowSettings] = useState(false);
   const [error, setError] = useState('');
 
-  // Build lookup table for grade points
-  const gradePoints: Record<string, number> = {};
-  gradeScale.grades.forEach(g => { gradePoints[g.label] = g.points; });
+  // Recalculate custom scale if name changed
+  const effectiveScale = customScaleName && gradeScale.name === 'Custom' ? { ...gradeScale, name: customScaleName } : gradeScale;
 
-  // Effective scale name includes custom name if set
-  const effectiveScaleName = gradeScale.name === 'Custom' && customScaleName ? customScaleName : gradeScale.name;
+  const gradePoints: Record<string, number> = {};
+  effectiveScale.grades.forEach(g => { gradePoints[g.label] = g.points; });
 
   useEffect(() => {
     if (semesters.length === 0) {
@@ -121,7 +120,7 @@ export default function GpaCalculator() {
   };
 
   const addCourse = (semesterId: string) => {
-    const defaultGrade = gradeScale.grades[0]?.label || 'A';
+    const defaultGrade = effectiveScale.grades[0]?.label || 'A';
     setSemesters(
       semesters.map(sem =>
         sem.id === semesterId
@@ -239,7 +238,7 @@ export default function GpaCalculator() {
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" onClick={() => setShowSettings(!showSettings)} className="gap-2">
               <Settings size={16} />
-              Grade Scale: {effectiveScaleName}
+              Grade Scale: {effectiveScale.name}
             </Button>
             {gradeScale.name === 'Custom' && customScaleName && (
               <span className="text-sm text-text-muted">({customScaleName})</span>
@@ -334,7 +333,8 @@ export default function GpaCalculator() {
         )}
       </Card>
 
-      {/* GPA Report Area */}
+  return (
+    <div className="space-y-6">
       <div id="gpa-report" className="space-y-6 p-6 bg-gradient-to-b from-surface to-surface-2 rounded-lg">
         {semesters.map(semester => {
           const semesterGPA = calculateSemesterGPA(semester.courses);
@@ -385,7 +385,7 @@ export default function GpaCalculator() {
                       }
                       className="px-3 py-2 bg-surface-2 border border-border rounded-lg text-text text-sm"
                     >
-                      {gradeScale.grades.map(g => (
+                      {effectiveScale.grades.map(g => (
                         <option key={g.label} value={g.label}>
                           {g.label} ({g.points.toFixed(1)})
                         </option>
@@ -413,7 +413,6 @@ export default function GpaCalculator() {
         })}
       </div>
 
-      {/* CGPA Summary */}
       <div className="grid grid-cols-2 gap-4">
         <Card className="p-4 bg-gradient-to-br from-accent/10 to-accent/5">
           <p className="text-text-muted text-sm">Overall CGPA</p>
@@ -425,7 +424,6 @@ export default function GpaCalculator() {
         </Card>
       </div>
 
-      {/* Action Buttons */}
       <div className="flex gap-3">
         <Button onClick={addSemester} variant="primary" className="flex-1">
           <Plus size={16} /> Add Semester

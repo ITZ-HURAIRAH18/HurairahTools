@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ChevronRight, Github, Twitter, Mail } from 'lucide-react';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/Button';
 
 export const metadata = {
   title: 'About UniToolKit',

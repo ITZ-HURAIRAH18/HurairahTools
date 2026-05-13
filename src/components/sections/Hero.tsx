@@ -1,25 +1,43 @@
 'use client';
 
-// Seeded pseudo-random generator — same values on server & client
-function seededRandom(seed: number): number {
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
+import { useMemo, useState, useEffect } from 'react';
+
+const MAX_U32 = 4294967295;
+
+// Deterministic 32-bit integer hash — same result in Node.js and browser
+function hashInt(seed: number): number {
+  let x = (seed << 13) >>> 0;
+  x = ((x * 48271) >>> 0) % 2147483647;
+  x = (x * 16807) >>> 0;
+  return x >>> 0;
+}
+
+// Float 0-1 from hash
+function hashFloat(seed: number): number {
+  return hashInt(seed) / MAX_U32;
 }
 
 export default function Hero() {
-  // Pre-compute 20 deterministic dots (index 0-19 as seeds)
-  const dots = Array.from({ length: 20 }, (_, i) => {
-    const seed = i + 1;
-    const size = 4 + seededRandom(seed) * 8;
-    const left = seededRandom(seed + 100) * 100;
-    const top = seededRandom(seed + 200) * 100;
-    const delay = seededRandom(seed + 300) * 4;
-    const duration = 4 + seededRandom(seed + 400) * 6;
-    const opacity = 0.08 + seededRandom(seed + 500) * 0.15;
-    const animIndex = i % 3;
-    const animation = animIndex === 0 ? 'dotPulse' : animIndex === 1 ? 'float-dots-fast' : 'dotFloat';
-    return { size, left, top, delay, duration, opacity, animation, key: i };
-  });
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const dots = useMemo(() =>
+    Array.from({ length: 20 }, (_, i) => {
+      const seed = i + 1;
+      const size = 4 + hashFloat(seed) * 8;
+      const left = hashFloat(seed + 100) * 100;
+      const top = hashFloat(seed + 200) * 100;
+      const delay = hashFloat(seed + 300) * 4;
+      const duration = 4 + hashFloat(seed + 400) * 6;
+      const opacity = 0.08 + hashFloat(seed + 500) * 0.15;
+      const animIndex = i % 3;
+      const animation = animIndex === 0 ? 'dotPulse' : animIndex === 1 ? 'float-dots-fast' : 'dotFloat';
+      return { size, left, top, delay, duration, opacity, animation, key: i };
+    })
+  , []);
+
   return (
     <section
       style={{
@@ -38,36 +56,18 @@ export default function Hero() {
         minHeight: '520px',
       }}
     >
-      {/* Animated dot layers */}
+      {/* Animated dot gradient layers */}
       <div
         className="animated-dots-layer"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: 'none',
-          opacity: 0.6,
-        }}
+        style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 0.6 }}
       />
       <div
         className="animated-dots-layer-2"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: 'none',
-          opacity: 0.5,
-        }}
+        style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 0.5 }}
       />
       <div
         className="animated-dots-layer-3"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: 'none',
-          opacity: 0.4,
-        }}
+        style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 0.4 }}
       />
 
       {/* Floating dot orbs — larger, softer */}
@@ -114,26 +114,26 @@ export default function Hero() {
         }}
       />
 
-       {/* Scattered individual dots — deterministic positions (seeded) */}
-       {dots.map(dot => (
-         <span
-           key={dot.key}
-           style={{
-             position: 'absolute',
-             left: `${dot.left}%`,
-             top: `${dot.top}%`,
-             width: `${dot.size}px`,
-             height: `${dot.size}px`,
-             borderRadius: '50%',
-             backgroundColor: '#1A6B3A',
-             opacity: dot.opacity,
-             zIndex: 1,
-             pointerEvents: 'none',
-             animation: `${dot.animation} ${dot.duration}s ease-in-out infinite ${dot.delay}s`,
-             transform: 'translate(-50%, -50%)',
-           }}
-         />
-       ))}
+      {/* Scattered individual dots — deterministic positions */}
+      {dots.map(dot => (
+        <span
+          key={dot.key}
+          style={{
+            position: 'absolute',
+            left: `${dot.left}%`,
+            top: `${dot.top}%`,
+            width: `${dot.size}px`,
+            height: `${dot.size}px`,
+            borderRadius: '50%',
+            backgroundColor: '#1A6B3A',
+            opacity: dot.opacity,
+            zIndex: 1,
+            pointerEvents: 'none',
+            animation: `${dot.animation} ${dot.duration}s ease-in-out infinite ${dot.delay}s`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
 
       {/* LAYER 1: Radial fade overlay — keeps the center clean where text lives */}
       <div
@@ -165,7 +165,6 @@ export default function Hero() {
           alignItems: 'center',
         }}
       >
-
         {/* Badge */}
         <div
           style={{
@@ -291,22 +290,13 @@ export default function Hero() {
           }}
         >
           {[
-            { num: '47',    label: 'Tools'   },
-            { num: '0',     label: 'Uploads' },
-            { num: '100%',  label: 'Private' },
-            { num: 'Free',  label: 'Forever' },
+            { num: '47', label: 'Tools' },
+            { num: '0', label: 'Uploads' },
+            { num: '100%', label: 'Private' },
+            { num: 'Free', label: 'Forever' },
           ].map((stat, i, arr) => (
-            <div
-              key={stat.label}
-              style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  gap: '4px',
-                }}
-              >
+            <div key={stat.label} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                 <span
                   style={{
                     fontSize: '16px',
@@ -333,10 +323,7 @@ export default function Hero() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
-  )
+  );
 }
-
-export { Hero }

@@ -74,8 +74,9 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ToolPage({ params }: ToolPageProps) {
-  const tool = tools.find((t) => t.slug === params.slug);
+export default async function ToolPage({ params }: ToolPageProps) {
+  const { slug } = params;
+  const tool = tools.find((t) => t.slug === slug);
 
   if (!tool) {
     notFound();

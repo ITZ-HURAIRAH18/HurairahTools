@@ -20,7 +20,7 @@ export function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="font-display text-base font-bold tracking-tight text-[#1A6B3A]">
-                Hurairah
+                UniToolKit
               </span>
               <span className="font-display text-[10px] font-normal tracking-normal text-[#4A6B55]">
                 Tools

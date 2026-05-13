@@ -93,10 +93,20 @@ export default function ResumeBuilder() {
     if (!previewRef.current) return;
 
     try {
-      const canvas = await html2canvas(previewRef.current, { scale: 2, backgroundColor: '#111118' });
+      const canvas = await html2canvas(previewRef.current, {
+        scale: 2, // Higher scale for better quality
+        backgroundColor: '#FFFFFF', // Ensure white background
+        useCORS: true, // Handle cross-origin images
+      });
+
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgData = canvas.toDataURL('image/png');
-      pdf.addImage(imgData, 'PNG', 10, 10, 190, 277);
+
+      // Calculate dimensions to maintain aspect ratio
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save('resume.pdf');
     } catch (err) {
       console.error('PDF export failed:', err);

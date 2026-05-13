@@ -1,4 +1,4 @@
-import { Hero } from '@/components/sections/Hero';
+import Hero from '@/components/sections/Hero';
 import { ToolGrid } from '@/components/sections/ToolGrid';
 import { WhySection } from '@/components/sections/WhySection';
 import { UniSpotlight } from '@/components/sections/UniSpotlight';
