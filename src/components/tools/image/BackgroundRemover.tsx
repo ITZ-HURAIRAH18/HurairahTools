@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { removeBackground } from '@imgly/background-removal';
 import { DropZone } from '@/components/ui/DropZone';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -35,6 +34,7 @@ export function BackgroundRemover() {
       setStatusText('Loading AI models (this takes a moment on first run)...');
       
       const config = {
+        device: 'cpu' as const,
         progress: (key: string, current: number, total: number) => {
           if (key === 'compute:inference') {
             setStatusText('Analyzing image...');
@@ -48,6 +48,7 @@ export function BackgroundRemover() {
       };
 
       try {
+        const { removeBackground } = await import('@imgly/background-removal');
         const result = await removeBackground(inputFile, config);
         setResultBlob(result);
         setPreviewUrl(URL.createObjectURL(result));

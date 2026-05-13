@@ -4,27 +4,28 @@
 
 @layer base {
   :root {
-    --bg: #F8FAF7;
+    --bg: #F7FAF8;
     --surface: #FFFFFF;
-    --surface-2: #F0F7F1;
-    --border: #E0EDE2;
-    --border-soft: #EBF5EC;
+    --surface-hover: #F0F7F2;
+    --green-50: #EEF7F1;
+    --green-100: #D5EDD9;
+    --green-200: #A8D9B0;
+    --green-500: #2D8A50;
+    --green-700: #1A6B3A;
+    --green-900: #0A2415;
+    --text-primary: #0A2415;
+    --text-secondary: #3D6B4F;
+    --text-muted: #6B9478;
+    --text-faint: #9AB8A0;
+    --border: #D5EDD9;
+    --border-soft: #EEF7F1;
     --accent: #1A6B3A;
-    --accent-light: #EAF5EC;
+    --accent-light: #EEF7F1;
     --accent-mid: #2D8A50;
-    --amber: #D97706;
-    --amber-light: #FFFBF0;
-    --amber-border: #F0DFA0;
-    --success: #16A34A;
-    --danger: #DC2626;
-    --info: #2563EB;
-    --text: #0A2415;
-    --text-muted: #4A6B55;
-    --text-faint: #7A9B82;
   }
 
   body {
-    @apply bg-[#F8FAF7] text-[#0A2415] antialiased font-sans;
+    @apply bg-[#F7FAF8] text-[#0A2415] antialiased font-sans;
     color-scheme: light;
   }
 
@@ -103,7 +104,7 @@
 }
 
 @layer utilities {
-  .text-gradient {
+.text-gradient {
     color: #1A6B3A;
   }
 
@@ -134,15 +135,16 @@
 
   .card-premium {
     background-color: #FFFFFF;
-    border: 1px solid #E0EDE2;
-    border-radius: 0.625rem;
-    transition: all 300ms ease;
+    border: 1px solid #D5EDD9;
+    border-radius: 0.75rem;
+    transition: all 0.18s ease;
   }
 
   .card-premium:hover {
     border-color: #1A6B3A;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(26, 107, 58, 0.08);
+    background: #F7FAF8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(26, 107, 58, 0.10);
   }
 
   .pill-badge {
@@ -157,11 +159,11 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8FAF7;
+  background: #F7FAF8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D0E8D4;
+  background: #D5EDD9;
   border-radius: 4px;
 }
 

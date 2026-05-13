@@ -76,19 +76,19 @@ export function ToolGrid() {
                       <div className="mb-4 flex items-start justify-between gap-3">
                         <div className={cn(
                           'flex h-9 w-9 items-center justify-center rounded-lg transition-colors',
-                          tool.category === 'pdf' && 'bg-[#EAF5EC] text-[#1A6B3A]',
-                          tool.category === 'image' && 'bg-[#E8F1FB] text-[#2563EB]',
-                          tool.category === 'developer' && 'bg-[#FEF3E2] text-[#D97706]',
-                          tool.category === 'university' && 'bg-[#FDE8E8] text-[#DC2626]',
+                          tool.category === 'pdf' && 'bg-[#EEF7F1] text-[#1A6B3A]',
+                          tool.category === 'image' && 'bg-[#EEF7F1] text-[#1A6B3A]',
+                          tool.category === 'developer' && 'bg-[#EEF7F1] text-[#1A6B3A]',
+                          tool.category === 'university' && 'bg-[#EEF7F1] text-[#1A6B3A]',
                         )}>
                           <Icon name={tool.icon} className="h-5 w-5" />
                         </div>
                         
-                        {/* Badges */}
-                        <div className="flex gap-2">
-                          {tool.isNew && (
-                            <span className="pill-badge bg-[#FEF3C7] text-[#92660A]">New</span>
-                          )}
+{/* Badges */}
+                         <div className="flex gap-2">
+                           {tool.isNew && (
+                             <span className="pill-badge bg-[#EEF7F1] text-[#1A6B3A] border border-[#D5EDD9]">New</span>
+                           )}
                         </div>
                       </div>
                       
@@ -101,7 +101,7 @@ export function ToolGrid() {
                     </div>
 
                     <div className="mt-4 flex items-center justify-between pt-3 border-t border-[#E0EDE2]">
-                      <span className="pill-badge bg-[#EAF5EC] text-[#1A6B3A] border border-[#C4E0CA]">
+                      <span className="pill-badge bg-[#EEF7F1] text-[#1A6B3A] border border-[#D5EDD9]">
                         <Lock className="h-2.5 w-2.5 inline mr-1" />Local
                       </span>
                     </div>

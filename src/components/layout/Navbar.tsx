@@ -9,7 +9,7 @@ export function Navbar() {
   const { setOpen } = useCommandStore();
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-[#E4EDE0] bg-white">
+    <nav className="sticky top-0 z-40 w-full border-b border-[#D5EDD9] bg-white">
       <div className="mx-auto flex h-13 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Logo */}
@@ -31,31 +31,31 @@ export function Navbar() {
 
         {/* Search Bar / CMD+K Trigger */}
         <div className="hidden flex-1 items-center justify-center sm:flex max-w-md mx-8">
-          <button
-            onClick={() => setOpen(true)}
-            className="flex w-full items-center justify-between rounded-lg border border-[#D0E8D4] bg-[#F0F7F1] px-4 py-2 text-sm text-[#4A6B55] transition-colors hover:border-[#1A6B3A] hover:text-[#0A2415]"
-          >
-            <div className="flex items-center gap-2">
-              <Search className="h-4 w-4" />
-              <span>Search tools...</span>
-            </div>
-            <kbd className="hidden rounded border border-[#D0E8D4] bg-white px-1.5 py-0.5 text-[10px] font-medium text-[#7A9B82] sm:inline-block">
-              <span className="text-xs">⌘</span>K
-            </kbd>
+<button
+             onClick={() => setOpen(true)}
+             className="flex w-full items-center justify-between rounded-lg border border-[#D5EDD9] bg-[#EEF7F1] px-4 py-2 text-sm text-[#3D6B4F] transition-colors hover:border-[#1A6B3A] hover:text-[#0A2415]"
+           >
+             <div className="flex items-center gap-2">
+               <Search className="h-4 w-4" />
+               <span>Search tools...</span>
+             </div>
+             <kbd className="hidden rounded border border-[#D5EDD9] bg-white px-1.5 py-0.5 text-[10px] font-medium text-[#9AB8A0] sm:inline-block">
+               <span className="text-xs">⌘</span>K
+             </kbd>
           </button>
         </div>
 
         {/* Right Nav */}
         <div className="flex items-center gap-4">
-          <button
-            onClick={() => setOpen(true)}
-            className="p-2 text-[#4A6B55] hover:text-[#0A2415] sm:hidden"
+<button
+             onClick={() => setOpen(true)}
+             className="p-2 text-[#3D6B4F] hover:text-[#0A2415] sm:hidden"
             aria-label="Search"
           >
             <Search className="h-5 w-5" />
           </button>
           
-          <div className="hidden items-center gap-4 text-sm font-medium text-[#4A6B55] sm:flex">
+          <div className="hidden items-center gap-4 text-sm font-medium text-[#3D6B4F] sm:flex">
             <Link href="/tools/pdf-merge" className="transition-colors hover:text-[#0A2415]">
               Tools
             </Link>
@@ -66,7 +66,7 @@ export function Navbar() {
               href="https://github.com" 
               target="_blank" 
               rel="noreferrer"
-              className="rounded-lg bg-[#1A6B3A] px-4 py-2 text-white transition-colors hover:bg-[#2D8A50]"
+              className="rounded-lg bg-[#1A6B3A] px-4 py-2 text-white transition-colors hover:bg-[#155C30]"
             >
               GitHub
             </a>

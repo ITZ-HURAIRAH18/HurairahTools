@@ -24,27 +24,46 @@ export function PdfPasswordProtect() {
     if (!file || !password) return;
 
     process({ file, pass: password }, async (params) => {
-      const arrayBuffer = await params.file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      
-      pdfDoc.encrypt({
-        userPassword: params.pass,
-        ownerPassword: params.pass,
-        permissions: {
-          printing: 'highResolution',
-          modifying: false,
-          copying: false,
-          annotating: false,
-          fillingForms: false,
-          documentAssembly: false,
-          contentAccessibility: true,
-        },
-      });
+      try {
+        const arrayBuffer = await params.file.arrayBuffer();
+        const srcPdf = await PDFDocument.load(arrayBuffer);
+        
+        // Create a fresh PDF and copy pages (more compatible encryption)
+        const pdfDoc = await PDFDocument.create();
+        const copiedPages = await pdfDoc.copyPages(srcPdf, srcPdf.getPageIndices());
+        copiedPages.forEach(page => pdfDoc.addPage(page));
 
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      downloadBlob(blob, `protected-${params.file.name}`);
-      return blob;
+        // Set metadata from source
+        const srcMeta = srcPdf.getTitle() || srcPdf.getSubject();
+        if (srcMeta) pdfDoc.setTitle(srcPdf.getTitle() || '');
+        if (srcPdf.getAuthor()) pdfDoc.setAuthor(srcPdf.getAuthor() || '');
+        if (srcPdf.getSubject()) pdfDoc.setSubject(srcPdf.getSubject() || '');
+
+        // Encrypt with AES-256
+        pdfDoc.encrypt({
+          userPassword: params.pass,
+          ownerPassword: params.pass,
+          permissions: {
+            printing: 'highResolution',
+            modifying: false,
+            copying: false,
+            annotating: false,
+            fillingForms: false,
+            documentAssembly: false,
+            contentAccessibility: true,
+          },
+        });
+
+        const pdfBytes = await pdfDoc.save({
+          useObjectStreams: false, // Better compatibility
+        });
+
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        downloadBlob(blob, `protected-${params.file.name}`);
+        return blob;
+      } catch (err: any) {
+        throw new Error(err.message || 'Failed to encrypt PDF. The file may be corrupted or password too weak.');
+      }
     });
   };
 

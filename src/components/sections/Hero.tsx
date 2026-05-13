@@ -1,147 +1,25 @@
-'use client'
+'use client';
 
-import { useEffect, useRef } from 'react'
+// Seeded pseudo-random generator — same values on server & client
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
 
-function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const resize = () => {
-      const dpr = window.devicePixelRatio || 1
-      canvas.width = canvas.offsetWidth * dpr
-      canvas.height = canvas.offsetHeight * dpr
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    }
-    const BASE_COLOR = [26, 107, 58]
-
-    type Particle = {
-      x: number
-      y: number
-      radius: number
-      phase: number
-      speed: number
-      drift: number
-      distFromCenter: number
-    }
-
-    const buildParticles = (): Particle[] => {
-      const particles: Particle[] = []
-      const width = canvas.offsetWidth
-      const height = canvas.offsetHeight
-      const cx = width / 2
-      const cy = height * 0.46
-      const maxDist = Math.sqrt(cx * cx + height * height)
-      const count = Math.max(28, Math.floor(width / 24))
-
-      for (let i = 0; i < count; i++) {
-        const side = i % 2 === 0 ? 'left' : 'right'
-        const edgeX = side === 'left'
-          ? Math.random() * width * 0.32
-          : width - Math.random() * width * 0.32
-        const y = Math.random() * height
-        const dx = edgeX - cx
-        const dy = y - cy
-        const dist = Math.sqrt(dx * dx + dy * dy)
-
-        particles.push({
-          x: edgeX,
-          y,
-          radius: 12 + Math.random() * 28,
-          phase: Math.random() * Math.PI * 2,
-          speed: 0.25 + Math.random() * 0.45,
-          drift: 6 + Math.random() * 16,
-          distFromCenter: dist / maxDist,
-        })
-      }
-
-      return particles
-    }
-
-    resize()
-    let particles = buildParticles()
-
-    const handleResize = () => {
-      resize()
-      particles = buildParticles()
-    }
-    window.addEventListener('resize', handleResize)
-
-    let frame = 0
-    let animId: number
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      const t = frame * 0.012
-      const width = canvas.offsetWidth
-      const height = canvas.offsetHeight
-
-      ctx.save()
-      ctx.filter = 'blur(14px)'
-      ctx.lineCap = 'round'
-
-      for (let i = 0; i < 5; i++) {
-        const y = height * (0.18 + i * 0.16) + Math.sin(t * 0.8 + i * 1.7) * 18
-        const wave = Math.sin(t * 0.7 + i) * 80
-        const opacity = 0.09 + Math.sin(t * 0.9 + i * 0.8) * 0.025
-
-        ctx.beginPath()
-        ctx.moveTo(-120, y)
-        ctx.bezierCurveTo(
-          width * 0.25,
-          y - 90 + wave,
-          width * 0.7,
-          y + 95 - wave,
-          width + 120,
-          y + Math.cos(t + i) * 35
-        )
-        ctx.strokeStyle = `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, ${opacity})`
-        ctx.lineWidth = 30 + i * 4
-        ctx.stroke()
-      }
-
-      ctx.restore()
-
-      for (const particle of particles) {
-        const edgeFactor = Math.max(0, (particle.distFromCenter - 0.18) / 0.82)
-        const pulse = Math.sin(t * particle.speed + particle.phase) * 0.5 + 0.5
-        const opacity = edgeFactor * (0.08 + pulse * 0.14)
-
-        if (opacity < 0.015) continue
-
-        const x = particle.x + Math.cos(t * particle.speed + particle.phase) * particle.drift * edgeFactor
-        const y = particle.y + Math.sin(t * particle.speed + particle.phase) * particle.drift * edgeFactor
-        const radius = particle.radius * (0.9 + pulse * 0.25)
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius)
-
-        gradient.addColorStop(0, `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, ${opacity})`)
-        gradient.addColorStop(0.55, `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, ${opacity * 0.35})`)
-        gradient.addColorStop(1, `rgba(${BASE_COLOR[0]}, ${BASE_COLOR[1]}, ${BASE_COLOR[2]}, 0)`)
-
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.arc(x, y, radius, 0, Math.PI * 2)
-        ctx.fill()
-      }
-
-      frame++
-      animId = requestAnimationFrame(draw)
-    }
-
-    draw()
-
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
+export default function Hero() {
+  // Pre-compute 20 deterministic dots (index 0-19 as seeds)
+  const dots = Array.from({ length: 20 }, (_, i) => {
+    const seed = i + 1;
+    const size = 4 + seededRandom(seed) * 8;
+    const left = seededRandom(seed + 100) * 100;
+    const top = seededRandom(seed + 200) * 100;
+    const delay = seededRandom(seed + 300) * 4;
+    const duration = 4 + seededRandom(seed + 400) * 6;
+    const opacity = 0.08 + seededRandom(seed + 500) * 0.15;
+    const animIndex = i % 3;
+    const animation = animIndex === 0 ? 'dotPulse' : animIndex === 1 ? 'float-dots-fast' : 'dotFloat';
+    return { size, left, top, delay, duration, opacity, animation, key: i };
+  });
   return (
     <section
       style={{
@@ -160,18 +38,102 @@ function Hero() {
         minHeight: '520px',
       }}
     >
-      {/* LAYER 0: Animated soft background — full section behind everything */}
-      <canvas
-        ref={canvasRef}
+      {/* Animated dot layers */}
+      <div
+        className="animated-dots-layer"
         style={{
           position: 'absolute',
           inset: 0,
-          width: '100%',
-          height: '100%',
           zIndex: 0,
           pointerEvents: 'none',
+          opacity: 0.6,
         }}
       />
+      <div
+        className="animated-dots-layer-2"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
+          opacity: 0.5,
+        }}
+      />
+      <div
+        className="animated-dots-layer-3"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
+          opacity: 0.4,
+        }}
+      />
+
+      {/* Floating dot orbs — larger, softer */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '12%',
+          left: '10%',
+          width: '300px',
+          height: '300px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(26,107,58,0.12) 0%, transparent 70%)',
+          zIndex: 0,
+          pointerEvents: 'none',
+          animation: 'dotFloat 7s ease-in-out infinite',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          top: '60%',
+          right: '8%',
+          width: '250px',
+          height: '250px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(26,107,58,0.1) 0%, transparent 70%)',
+          zIndex: 0,
+          pointerEvents: 'none',
+          animation: 'dotFloat 9s ease-in-out infinite reverse',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '15%',
+          left: '40%',
+          width: '200px',
+          height: '200px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(26,107,58,0.08) 0%, transparent 70%)',
+          zIndex: 0,
+          pointerEvents: 'none',
+          animation: 'dotFloat 6s ease-in-out infinite 2s',
+        }}
+      />
+
+       {/* Scattered individual dots — deterministic positions (seeded) */}
+       {dots.map(dot => (
+         <span
+           key={dot.key}
+           style={{
+             position: 'absolute',
+             left: `${dot.left}%`,
+             top: `${dot.top}%`,
+             width: `${dot.size}px`,
+             height: `${dot.size}px`,
+             borderRadius: '50%',
+             backgroundColor: '#1A6B3A',
+             opacity: dot.opacity,
+             zIndex: 1,
+             pointerEvents: 'none',
+             animation: `${dot.animation} ${dot.duration}s ease-in-out infinite ${dot.delay}s`,
+             transform: 'translate(-50%, -50%)',
+           }}
+         />
+       ))}
 
       {/* LAYER 1: Radial fade overlay — keeps the center clean where text lives */}
       <div
@@ -186,16 +148,16 @@ function Hero() {
             rgba(240, 249, 242, 0.16) 70%,
             transparent 100%
           )`,
-          zIndex: 1,
+          zIndex: 2,
           pointerEvents: 'none',
         }}
       />
 
-      {/* LAYER 2: All hero content — fully above dots and overlay */}
+      {/* LAYER 2: All hero content */}
       <div
         style={{
           position: 'relative',
-          zIndex: 2,
+          zIndex: 3,
           width: '100%',
           maxWidth: '680px',
           display: 'flex',
@@ -377,5 +339,4 @@ function Hero() {
   )
 }
 
-export default Hero
 export { Hero }

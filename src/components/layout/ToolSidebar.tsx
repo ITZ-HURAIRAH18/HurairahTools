@@ -21,12 +21,12 @@ export function ToolSidebar({ activeSlug, activeCategory }: ToolSidebarProps) {
   };
 
   return (
-    <aside className="hidden w-56 flex-shrink-0 flex-col border-r border-[#E0EDE2] bg-[#F0F7F1] lg:flex h-[calc(100vh-52px)] sticky top-13">
-      <div className="flex flex-col h-full p-3 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D0E8D4] scrollbar-track-transparent">
+    <aside className="hidden w-56 flex-shrink-0 flex-col border-r border-[#D5EDD9] bg-[#EEF7F1] lg:flex h-[calc(100vh-52px)] sticky top-13">
+      <div className="flex flex-col h-full p-3 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D5EDD9] scrollbar-track-transparent">
         
         {/* Category Header */}
         <div className="mb-4 mt-2 px-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-[#7A9B82]">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-[#9AB8A0]">
             {categoryNames[activeCategory]}
           </h2>
         </div>
@@ -41,14 +41,14 @@ export function ToolSidebar({ activeSlug, activeCategory }: ToolSidebarProps) {
                 href={`/tools/${tool.slug}`}
                 className={cn(
                   'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all',
-                  isActive
-                    ? 'bg-[#EAF5EC] text-[#0A2415] font-semibold border-l-2 border-[#1A6B3A]'
-                    : 'text-[#4A6B55] hover:bg-[#E4F0E6] hover:text-[#0A2415] border-l-2 border-transparent'
+isActive
+                     ? 'bg-[#EEF7F1] text-[#0A2415] font-semibold border-l-2 border-[#1A6B3A]'
+                     : 'text-[#3D6B4F] hover:bg-[#EEF7F1] hover:text-[#0A2415] border-l-2 border-transparent'
                 )}
               >
                 <Icon
                   name={tool.icon}
-                  className={cn('h-4 w-4 shrink-0 transition-colors', isActive ? 'text-[#1A6B3A]' : 'text-[#4A6B55] group-hover:text-[#0A2415]')}
+                  className={cn('h-4 w-4 shrink-0 transition-colors', isActive ? 'text-[#1A6B3A]' : 'text-[#3D6B4F] group-hover:text-[#0A2415]')}
                 />
                 <span className="truncate">{tool.title}</span>
               </Link>
@@ -58,7 +58,7 @@ export function ToolSidebar({ activeSlug, activeCategory }: ToolSidebarProps) {
 
         {/* Bottom Trust Badge */}
         <div className="mt-6 px-3 pb-4">
-          <div className="flex items-center gap-2 rounded-lg border border-[#C4E0CA] bg-white p-3 text-xs text-[#1A6B3A]">
+          <div className="flex items-center gap-2 rounded-lg border border-[#D5EDD9] bg-white p-3 text-xs text-[#1A6B3A]">
             <Lock className="h-4 w-4 shrink-0" />
             <span className="font-medium leading-tight">🔒 Local Only<br/><span className="font-normal opacity-75">No uploads</span></span>
           </div>
