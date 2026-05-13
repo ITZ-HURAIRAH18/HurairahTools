@@ -8,7 +8,7 @@ import { ToolSidebar } from '@/components/layout/ToolSidebar';
 import { Badge } from '@/components/ui/Badge';
 
 interface ToolPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 // Map slugs to dynamic imports
@@ -75,19 +75,13 @@ export function generateStaticParams() {
 }
 
 export default async function ToolPage({ params }: ToolPageProps) {
-  const { slug } = params;
-  const tool = tools.find((t) => t.slug === slug);
+  const { slug } = await params;
 
-  if (!tool) {
-    notFound();
+  const ToolComponent = componentMap[slug];
+
+  if (!ToolComponent) {
+    return notFound();
   }
-
-  // Load the specific tool component, or a placeholder if not built yet
-  const ToolComponent = componentMap[tool.slug] || (() => (
-    <div className="flex h-64 items-center justify-center rounded-xl border border-dashed border-border p-6 text-center text-text-muted">
-      This tool is currently under development. Check back later!
-    </div>
-  ));
 
   const categoryNames = {
     pdf: 'PDF Tools',
@@ -98,7 +92,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
   return (
     <div className="flex w-full flex-1 max-w-[1600px] mx-auto">
-      <ToolSidebar activeSlug={tool.slug} activeCategory={tool.category} />
+      <ToolSidebar activeSlug={slug} activeCategory={tool.category} />
       
       <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 overflow-y-auto">
         <div className="mx-auto max-w-4xl">
