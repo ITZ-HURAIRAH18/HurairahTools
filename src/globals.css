@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   CSS VARIABLES — Design System Tokens
+   ============================================ */
+:root {
+  /* Backgrounds */
+  --bg: #F8FAF7;
+  --surface: #FFFFFF;
+  --surface-2: #F0F7F1;
+
+  /* Borders */
+  --border: #E0EDE2;
+  --border-soft: #EBF5EC;
+
+  /* Accent (primary green) */
+  --accent: #1A6B3A;
+  --accent-light: #EAF5EC;
+  --accent-mid: #2D8A50;
+
+  /* Amber (university tools) */
+  --amber: #D97706;
+  --amber-light: #FFFBF0;
+  --amber-border: #F0DFA0;
+
+  /* Semantic */
+  --success: #16A34A;
+  --danger: #DC2626;
+  --info: #2563EB;
+
+  /* Text */
+  --text: #0A2415;
+  --text-muted: #4A6B55;
+  --text-faint: #7A9B82;
+
+  /* Fonts */
+  --font-bricolage: 'Bricolage Grotesque', sans-serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', monospace;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   BACKGROUND PATTERNS
+   ============================================ */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Hero dot animations */
+@keyframes dotPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.6; }
+}
+
+@keyframes float-dots-fast {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-12px); }
+}
+
+@keyframes dotFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-8px); }
+}
+
+.animated-dots-layer {
+  background-image: radial-gradient(circle, rgba(26, 107, 58, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  animation: dotFloat 12s ease-in-out infinite;
+}
+
+.animated-dots-layer-2 {
+  background-image: radial-gradient(circle, rgba(26, 107, 58, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  animation: dotFloat 18s ease-in-out infinite reverse;
+}
+
+.animated-dots-layer-3 {
+  background-image: radial-gradient(circle, rgba(26, 107, 58, 0.03) 1px, transparent 1px);
+  background-size: 34px 34px;
+  animation: dotPulse 8s ease-in-out infinite;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #D5EDD9;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #1A6B3A;
+}
+
+/* ============================================
+   PILLE BADGE (inline badge used in cards)
+   ============================================ */
+.pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ============================================
+   TEXT GRADIENT UTILITY
+   ============================================ */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent), var(--accent-mid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   CARD PREMIUM (used in ToolGrid)
+   ============================================ */
+.card-premium {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.card-premium:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(26, 107, 58, 0.08);
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   BADGE VARIANTS (matching design system)
+   ============================================ */
+.badge-green {
+  background: #EAF5EC;
+  color: #1A6B3A;
+  border: 1px solid #C4E0CA;
+}
+
+.badge-amber {
+  background: #FEF3C7;
+  color: #92660A;
+  border: 1px solid #F0DFA0;
+}
+
+.badge-blue {
+  background: #E8F1FB;
+  color: #2563EB;
+  border: 1px solid #B8D9EF;
+}
+
+.badge-red {
+  background: #FDE8E8;
+  color: #DC2626;
+  border: 1px solid #F5B3B3;
+}

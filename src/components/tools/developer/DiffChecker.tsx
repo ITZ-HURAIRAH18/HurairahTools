@@ -121,7 +121,7 @@ export function DiffChecker() {
             <span className="flex items-center gap-1"><span className="w-3 h-3 bg-success/20 rounded inline-block border border-success/50"></span> Added</span>
           </div>
         </div>
-        <div className="flex-1 overflow-auto p-4 bg-[#0d0d12]">
+        <div className="flex-1 overflow-auto p-4 bg-surface-2">
           {diffResult.length > 0 ? renderDiff() : <span className="text-text-muted text-sm">No differences found.</span>}
         </div>
       </Card>
