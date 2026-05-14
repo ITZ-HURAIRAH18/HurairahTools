@@ -24,7 +24,7 @@ export function CodeFormatter() {
   const [error, setError] = useState<string | null>(null);
   const [isFormatting, setIsFormatting] = useState(false);
 
-  const { copiedText, copyWithFeedback } = useClipboard();
+  const { hasCopied, copyToClipboard } = useClipboard();
 
   const handleFormat = async () => {
     if (!input.trim()) return;
@@ -148,12 +148,12 @@ export function CodeFormatter() {
               <Button 
                 size="sm" 
                 variant="outline"
-                onClick={() => copyWithFeedback(output)} 
+                onClick={() => copyToClipboard(output)} 
                 disabled={!output}
                 className="gap-2 bg-surface"
               >
                 <Copy className="h-4 w-4" />
-                {copiedText === output ? 'Copied' : 'Copy'}
+                {hasCopied ? 'Copied' : 'Copy'}
               </Button>
               <Button 
                 size="sm" 

@@ -17,7 +17,7 @@ export function HashGenerator() {
     sha512: ''
   });
 
-  const { copiedText, copyWithFeedback } = useClipboard();
+  const { hasCopied, copyToClipboard } = useClipboard();
 
   useEffect(() => {
     if (!input) {
@@ -103,11 +103,11 @@ export function HashGenerator() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => copyWithFeedback(hash.value)}
+                onClick={() => copyToClipboard(hash.value)}
                 disabled={!hash.value}
                 className="h-8"
               >
-                {copiedText === hash.value ? (
+                {hasCopied ? (
                   <Check className="h-4 w-4 text-success" />
                 ) : (
                   <Copy className="h-4 w-4" />

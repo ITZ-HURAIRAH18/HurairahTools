@@ -47,7 +47,7 @@ export function PdfWatermark() {
       });
 
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
       downloadBlob(blob, `watermarked-${params.file.name}`);
       return blob;
     });

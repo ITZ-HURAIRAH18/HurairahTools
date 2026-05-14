@@ -12,7 +12,7 @@ export function CssMinifier() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   
-  const { copiedText, copyWithFeedback } = useClipboard();
+  const { hasCopied, copyToClipboard } = useClipboard();
 
   const handleMinify = () => {
     if (!input.trim()) return;
@@ -85,12 +85,12 @@ export function CssMinifier() {
               <Button 
                 size="sm" 
                 variant="outline"
-                onClick={() => copyWithFeedback(output)} 
+                onClick={() => copyToClipboard(output)} 
                 disabled={!output}
                 className="gap-2 bg-surface"
               >
                 <Copy className="h-4 w-4" />
-                {copiedText === output ? 'Copied' : 'Copy'}
+                {hasCopied ? 'Copied' : 'Copy'}
               </Button>
               <Button 
                 size="sm" 

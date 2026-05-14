@@ -39,7 +39,9 @@ export function PdfPasswordProtect() {
         if (srcPdf.getAuthor()) pdfDoc.setAuthor(srcPdf.getAuthor() || '');
         if (srcPdf.getSubject()) pdfDoc.setSubject(srcPdf.getSubject() || '');
 
-        // Encrypt with AES-256
+        // NOTE: pdf-lib v1.17 does not natively support encryption.
+        // This feature requires a different library or a WASM-based approach like qpdf.
+        /*
         pdfDoc.encrypt({
           userPassword: params.pass,
           ownerPassword: params.pass,
@@ -53,12 +55,15 @@ export function PdfPasswordProtect() {
             contentAccessibility: true,
           },
         });
+        */
+        console.warn("PDF Encryption is not supported by pdf-lib in the browser.");
+        throw new Error("PDF Encryption is currently not supported in this version. We are working on a WASM-based solution.");
 
         const pdfBytes = await pdfDoc.save({
           useObjectStreams: false, // Better compatibility
         });
 
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
         downloadBlob(blob, `protected-${params.file.name}`);
         return blob;
       } catch (err: any) {

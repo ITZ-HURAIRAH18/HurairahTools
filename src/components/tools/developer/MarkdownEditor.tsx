@@ -47,7 +47,7 @@ export function MarkdownEditor() {
   // View mode for mobile (where split pane is too squished)
   const [mobileView, setMobileView] = useState<'write' | 'preview'>('write');
   
-  const { copiedText, copyWithFeedback } = useClipboard();
+  const { hasCopied, copyToClipboard } = useClipboard();
 
   const handleExportMd = () => {
     const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
@@ -115,8 +115,8 @@ export function MarkdownEditor() {
         </div>
 
         <div className="flex items-center gap-2 ml-auto">
-          <Button variant="ghost" size="sm" onClick={() => copyWithFeedback(markdown)}>
-            {copiedText === markdown ? 'Copied MD' : <Copy className="h-4 w-4 mr-2" />}
+          <Button variant="ghost" size="sm" onClick={() => copyToClipboard(markdown)}>
+            {hasCopied ? 'Copied MD' : <Copy className="h-4 w-4 mr-2" />}
             <span className="hidden sm:inline">Copy MD</span>
           </Button>
           <Button variant="outline" size="sm" onClick={handleExportMd} className="gap-2">

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { ChevronRight, Twitter, Mail } from 'lucide-react';
-import { GitHub as Github } from 'lucide-react';
+import { ChevronRight, Mail } from 'lucide-react';
+import { Globe as Github } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 export const metadata = {

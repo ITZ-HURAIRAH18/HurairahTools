@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import { useClipboard } from '@/hooks/useClipboard';
 import { downloadBlob, formatBytes } from '@/lib/utils';
-import { Code, Copy, Download } from 'lucide-react';
+import { Code, Copy, Download, Zap } from 'lucide-react';
 
 // Browser-compatible HTML minifier
 function minifyHtml(html: string): string {
@@ -37,7 +37,7 @@ export function HtmlMinifier() {
   const [error, setError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   
-  const { copiedText, copyWithFeedback } = useClipboard();
+  const { hasCopied, copyToClipboard } = useClipboard();
 
   const handleMinify = () => {
     if (!input.trim()) return;
@@ -109,12 +109,12 @@ export function HtmlMinifier() {
               <Button 
                 size="sm" 
                 variant="outline"
-                onClick={() => copyWithFeedback(output)} 
+                onClick={() => copyToClipboard(output)} 
                 disabled={!output}
                 className="gap-2 bg-surface"
               >
                 <Copy className="h-4 w-4" />
-                {copiedText === output ? 'Copied' : 'Copy'}
+                {hasCopied ? 'Copied' : 'Copy'}
               </Button>
               <Button 
                 size="sm" 

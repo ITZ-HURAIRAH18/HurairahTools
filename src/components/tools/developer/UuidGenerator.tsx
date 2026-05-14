@@ -10,7 +10,7 @@ import { Copy, RefreshCw, Key } from 'lucide-react';
 export function UuidGenerator() {
   const [count, setCount] = useState<number>(5);
   const [uuids, setUuids] = useState<string[]>([]);
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied: copied, copyToClipboard } = useClipboard();
 
   const generateV4 = () => {
     // Native crypto.randomUUID()

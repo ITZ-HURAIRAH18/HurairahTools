@@ -67,7 +67,7 @@ export function JpgToPdf() {
       }
       
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
       downloadBlob(blob, 'images.pdf');
       return blob;
     });

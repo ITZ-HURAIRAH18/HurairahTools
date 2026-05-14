@@ -101,7 +101,7 @@ export default function CitationGenerator() {
     type: 'Book',
     data: {},
   });
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied: copied, copyToClipboard } = useClipboard();
 
   const sourceType = (newCitation.type || 'Book') as SourceType;
   const fields = SOURCE_FIELDS[sourceType];

@@ -14,7 +14,7 @@ export function Base64Tool() {
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
   
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied, copyToClipboard } = useClipboard();
 
   // UTF-8 safe base64 encoding/decoding
   const encodeBase64 = (str: string) => {
@@ -102,7 +102,7 @@ export function Base64Tool() {
               className="gap-2"
             >
               <Copy className="h-4 w-4" />
-              {copied ? 'Copied' : 'Copy'}
+              {hasCopied ? 'Copied' : 'Copy'}
             </Button>
           </div>
           

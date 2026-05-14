@@ -15,7 +15,7 @@ export function ColorPicker() {
   const [selectedColor, setSelectedColor] = useState<{ r: number, g: number, b: number } | null>(null);
   
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied: copied, copyToClipboard } = useClipboard();
 
   const handleFileSelect = (files: File[]) => {
     const selected = files[0];

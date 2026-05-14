@@ -42,7 +42,7 @@ export function PdfCompress() {
       
       setCompressedSize(pdfBytes.byteLength);
       
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
       downloadBlob(blob, `compressed-${file.name}`);
       return blob;
     });

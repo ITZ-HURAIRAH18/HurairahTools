@@ -20,7 +20,7 @@ export default function EquationEvaluator() {
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
   const [history, setHistory] = useLocalStorage<HistoryEntry[]>('equation-history', []);
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied: copied, copyToClipboard } = useClipboard();
 
   const evaluateExpression = (expr: string): string => {
     try {

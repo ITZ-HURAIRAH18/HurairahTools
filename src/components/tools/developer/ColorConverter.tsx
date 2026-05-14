@@ -14,7 +14,7 @@ export function ColorConverter() {
   const [cmyk, setCmyk] = useState('cmyk(59%, 58%, 0%, 5%)');
   const [error, setError] = useState<string | null>(null);
 
-  const { copiedText, copyWithFeedback } = useClipboard();
+  const { hasCopied, copyToClipboard } = useClipboard();
 
   // Color conversion formulas
   const hexToRgb = (h: string) => {
@@ -127,8 +127,8 @@ export function ColorConverter() {
                 }}
                 className="font-mono flex-1 uppercase"
               />
-              <Button variant="ghost" size="sm" onClick={() => copyWithFeedback(hex)}>
-                {copiedText === hex ? 'Copied' : <Copy className="h-4 w-4" />}
+              <Button variant="ghost" size="sm" onClick={() => copyToClipboard(hex)}>
+                {hasCopied ? 'Copied' : <Copy className="h-4 w-4" />}
               </Button>
             </div>
 
@@ -139,8 +139,8 @@ export function ColorConverter() {
                 readOnly
                 className="font-mono flex-1 bg-surface-2"
               />
-              <Button variant="ghost" size="sm" onClick={() => copyWithFeedback(rgb)}>
-                {copiedText === rgb ? 'Copied' : <Copy className="h-4 w-4" />}
+              <Button variant="ghost" size="sm" onClick={() => copyToClipboard(rgb)}>
+                {hasCopied ? 'Copied' : <Copy className="h-4 w-4" />}
               </Button>
             </div>
 
@@ -151,8 +151,8 @@ export function ColorConverter() {
                 readOnly
                 className="font-mono flex-1 bg-surface-2"
               />
-              <Button variant="ghost" size="sm" onClick={() => copyWithFeedback(hsl)}>
-                {copiedText === hsl ? 'Copied' : <Copy className="h-4 w-4" />}
+              <Button variant="ghost" size="sm" onClick={() => copyToClipboard(hsl)}>
+                {hasCopied ? 'Copied' : <Copy className="h-4 w-4" />}
               </Button>
             </div>
 
@@ -163,8 +163,8 @@ export function ColorConverter() {
                 readOnly
                 className="font-mono flex-1 bg-surface-2"
               />
-              <Button variant="ghost" size="sm" onClick={() => copyWithFeedback(cmyk)}>
-                {copiedText === cmyk ? 'Copied' : <Copy className="h-4 w-4" />}
+              <Button variant="ghost" size="sm" onClick={() => copyToClipboard(cmyk)}>
+                {hasCopied ? 'Copied' : <Copy className="h-4 w-4" />}
               </Button>
             </div>
           </div>

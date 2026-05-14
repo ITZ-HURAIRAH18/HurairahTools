@@ -24,7 +24,7 @@ export function LoremIpsum() {
   const [startWithLorem, setStartWithLorem] = useState(true);
   const [output, setOutput] = useState('');
   
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied: copied, copyToClipboard } = useClipboard();
 
   const getRandomWord = () => LOREM_WORDS[Math.floor(Math.random() * LOREM_WORDS.length)];
   

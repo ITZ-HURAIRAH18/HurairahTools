@@ -14,7 +14,7 @@ export function UrlEncoder() {
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
   
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied: copied, copyToClipboard } = useClipboard();
 
   const handleProcess = () => {
     try {

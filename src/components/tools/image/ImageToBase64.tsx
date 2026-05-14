@@ -22,7 +22,7 @@ export function ImageToBase64() {
   const [base64Input, setBase64Input] = useState('');
   const [decodedImgSrc, setDecodedImgSrc] = useState('');
 
-  const { copied, copyToClipboard } = useClipboard();
+  const { hasCopied: copied, copyToClipboard } = useClipboard();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleFileSelect = (files: File[]) => {

@@ -1,72 +1,15 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { ChevronRight, Lock } from 'lucide-react';
 import { tools } from '@/lib/tools-registry';
 import { Icon } from '@/components/ui/Icon';
 import { ToolSidebar } from '@/components/layout/ToolSidebar';
 import { Badge } from '@/components/ui/Badge';
+import { ToolRenderer } from '@/components/tools/ToolRenderer';
 
 interface ToolPageProps {
   params: Promise<{ slug: string }>;
 }
-
-// Map slugs to dynamic imports
-const componentMap: Record<string, any> = {
-  'pdf-merge': dynamic(() => import('@/components/tools/pdf/PdfMerge').then(mod => mod.PdfMerge)),
-  'pdf-split': dynamic(() => import('@/components/tools/pdf/PdfSplit').then(mod => mod.PdfSplit)),
-  'pdf-compress': dynamic(() => import('@/components/tools/pdf/PdfCompress').then(mod => mod.PdfCompress)),
-  'pdf-to-jpg': dynamic(() => import('@/components/tools/pdf/PdfToJpg').then(mod => mod.PdfToJpg)),
-  'jpg-to-pdf': dynamic(() => import('@/components/tools/pdf/JpgToPdf').then(mod => mod.JpgToPdf)),
-  'pdf-to-word': dynamic(() => import('@/components/tools/pdf/PdfToWord').then(mod => mod.PdfToWord)),
-  'pdf-to-excel': dynamic(() => import('@/components/tools/pdf/PdfToExcel').then(mod => mod.PdfToExcel)),
-  'pdf-rotate': dynamic(() => import('@/components/tools/pdf/PdfRotate').then(mod => mod.PdfRotate)),
-  'pdf-delete-pages': dynamic(() => import('@/components/tools/pdf/PdfDeletePages').then(mod => mod.PdfDeletePages)),
-  'pdf-page-numbers': dynamic(() => import('@/components/tools/pdf/PdfPageNumbers').then(mod => mod.PdfPageNumbers)),
-  'pdf-watermark': dynamic(() => import('@/components/tools/pdf/PdfWatermark').then(mod => mod.PdfWatermark)),
-  'pdf-password-protect': dynamic(() => import('@/components/tools/pdf/PdfPasswordProtect').then(mod => mod.PdfPasswordProtect)),
-  
-  // Image Tools
-  'image-compressor': dynamic(() => import('@/components/tools/image/ImageCompressor').then(mod => mod.ImageCompressor)),
-  'image-resizer': dynamic(() => import('@/components/tools/image/ImageResizer').then(mod => mod.ImageResizer)),
-  'image-converter': dynamic(() => import('@/components/tools/image/ImageConverter').then(mod => mod.ImageConverter)),
-  'background-remover': dynamic(() => import('@/components/tools/image/BackgroundRemover').then(mod => mod.BackgroundRemover)),
-  'image-cropper': dynamic(() => import('@/components/tools/image/ImageCropper').then(mod => mod.ImageCropper)),
-  'bulk-image-resizer': dynamic(() => import('@/components/tools/image/BulkImageResizer').then(mod => mod.BulkImageResizer)),
-  'image-to-base64': dynamic(() => import('@/components/tools/image/ImageToBase64').then(mod => mod.ImageToBase64)),
-  'add-watermark': dynamic(() => import('@/components/tools/image/AddWatermark').then(mod => mod.AddWatermark)),
-  'color-picker': dynamic(() => import('@/components/tools/image/ColorPicker').then(mod => mod.ColorPicker)),
-  'metadata-viewer': dynamic(() => import('@/components/tools/image/MetadataViewer').then(mod => mod.MetadataViewer)),
-  
-  // Developer Tools
-  'json-formatter': dynamic(() => import('@/components/tools/developer/JsonFormatter').then(mod => mod.JsonFormatter)),
-  'jwt-decoder': dynamic(() => import('@/components/tools/developer/JwtDecoder').then(mod => mod.JwtDecoder)),
-  'base64-tool': dynamic(() => import('@/components/tools/developer/Base64Tool').then(mod => mod.Base64Tool)),
-  'url-encoder': dynamic(() => import('@/components/tools/developer/UrlEncoder').then(mod => mod.UrlEncoder)),
-  'regex-tester': dynamic(() => import('@/components/tools/developer/RegexTester').then(mod => mod.RegexTester)),
-  'hash-generator': dynamic(() => import('@/components/tools/developer/HashGenerator').then(mod => mod.HashGenerator)),
-  'uuid-generator': dynamic(() => import('@/components/tools/developer/UuidGenerator').then(mod => mod.UuidGenerator)),
-  'lorem-ipsum': dynamic(() => import('@/components/tools/developer/LoremIpsum').then(mod => mod.LoremIpsum)),
-  'color-converter': dynamic(() => import('@/components/tools/developer/ColorConverter').then(mod => mod.ColorConverter)),
-  'markdown-editor': dynamic(() => import('@/components/tools/developer/MarkdownEditor').then(mod => mod.MarkdownEditor)),
-  'diff-checker': dynamic(() => import('@/components/tools/developer/DiffChecker').then(mod => mod.DiffChecker)),
-  'cron-parser': dynamic(() => import('@/components/tools/developer/CronParser').then(mod => mod.CronParser)),
-  'code-formatter': dynamic(() => import('@/components/tools/developer/CodeFormatter').then(mod => mod.CodeFormatter)),
-  'css-minifier': dynamic(() => import('@/components/tools/developer/CssMinifier').then(mod => mod.CssMinifier)),
-  'html-minifier': dynamic(() => import('@/components/tools/developer/HtmlMinifier').then(mod => mod.HtmlMinifier)),
-
-  // University Tools
-  'gpa-calculator': dynamic(() => import('@/components/tools/university/GpaCalculator')),
-  'deadline-tracker': dynamic(() => import('@/components/tools/university/DeadlineTracker')),
-  'citation-generator': dynamic(() => import('@/components/tools/university/CitationGenerator')),
-  'plagiarism-checker': dynamic(() => import('@/components/tools/university/PlagiarismChecker')),
-  'word-counter': dynamic(() => import('@/components/tools/university/WordCounter')),
-  'pomodoro-timer': dynamic(() => import('@/components/tools/university/PomodoroTimer')),
-  'unit-converter': dynamic(() => import('@/components/tools/university/UnitConverter')),
-  'equation-evaluator': dynamic(() => import('@/components/tools/university/EquationEvaluator')),
-  'resume-builder': dynamic(() => import('@/components/tools/university/ResumeBuilder')),
-  'timetable-builder': dynamic(() => import('@/components/tools/university/TimetableBuilder')),
-};
 
 export function generateStaticParams() {
   return tools.map((tool) => ({
@@ -77,9 +20,8 @@ export function generateStaticParams() {
 export default async function ToolPage({ params }: ToolPageProps) {
   const { slug } = await params;
 
-  const ToolComponent = componentMap[slug];
-
-  if (!ToolComponent) {
+  const tool = tools.find((t) => t.slug === slug);
+  if (!tool) {
     return notFound();
   }
 
@@ -115,7 +57,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
                 <div>
                   <h1 className="font-display text-3xl font-bold text-text">{tool.title}</h1>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <Badge variant="indigo" className="uppercase">{tool.category}</Badge>
+                    <Badge variant="blue" className="uppercase">{tool.category}</Badge>
                     <Badge variant="green" className="gap-1 px-2">
                       <Lock className="h-3 w-3" /> Local
                     </Badge>
@@ -129,7 +71,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
           {/* Tool Implementation Area */}
           <div className="w-full">
-            <ToolComponent />
+            <ToolRenderer slug={slug} />
           </div>
         </div>
       </main>

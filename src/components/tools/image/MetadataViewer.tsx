@@ -25,7 +25,7 @@ export function MetadataViewer() {
           exif: true,
           gps: true,
           ifd0: true,
-        });
+        } as any);
         
         if (!parsed || Object.keys(parsed).length === 0) {
           throw new Error("No readable EXIF metadata found in this image.");

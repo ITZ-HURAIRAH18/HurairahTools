@@ -75,7 +75,7 @@ export function PdfDeletePages() {
       }
       
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
       downloadBlob(blob, `edited-${file.name}`);
       return blob;
     });
