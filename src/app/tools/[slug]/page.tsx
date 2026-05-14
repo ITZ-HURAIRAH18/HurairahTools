@@ -51,7 +51,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
           <header className="mb-10">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
               <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--accent),var(--violet))] shadow-[0_0_20px_rgba(99,102,241,0.3)]">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent shadow-[0_0_20px_rgba(26,107,58,0.3)]">
                   <Icon name={tool.icon} className="h-8 w-8 text-white" />
                 </div>
                 <div>

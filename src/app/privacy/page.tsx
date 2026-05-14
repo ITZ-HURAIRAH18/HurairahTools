@@ -26,7 +26,7 @@ export default function PrivacyPage() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="prose prose-invert max-w-none space-y-8">
+        <div className="prose max-w-none space-y-8">
           {/* Introduction */}
           <section>
             <h2 className="text-2xl font-bold text-text mb-4">The Short Version</h2>

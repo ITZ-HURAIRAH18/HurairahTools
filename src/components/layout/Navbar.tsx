@@ -63,7 +63,7 @@ export function Navbar() {
               About
             </Link>
             <a 
-              href="https://github.com" 
+              href="https://github.com/ITZ-HURAIRAH18" 
               target="_blank" 
               rel="noreferrer"
               className="rounded-lg bg-[#1A6B3A] px-4 py-2 text-white transition-colors hover:bg-[#155C30]"
