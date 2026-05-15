@@ -235,8 +235,8 @@ Built for students. Free forever. No strings attached.
 
 **M Abu Hurairah**
 
-- 🌐 Portfolio: [hurairahtools.com](https://hurairahtools.com)
-- 💼 LinkedIn: [M Abu Hurairah](https://linkedin.com/in/hurairah)
+- 🌐 Portfolio: [hurairahtools.com](abuhurairah.engineer)
+- 💼 LinkedIn: [M Abu Hurairah](https://www.linkedin.com/in/muhammad-abu-hurairah-988ba1303/)
 - 🐙 GitHub: [@ITZ-HURAIRAH18](https://github.com/ITZ-HURAIRAH18)
 
 ---
@@ -258,7 +258,7 @@ Contributions are welcome! To contribute:
 Have suggestions? Found a bug? Questions about a tool?
 
 - Open an issue on [GitHub](https://github.com/ITZ-HURAIRAH18/HurairahTools/issues)
-- Email: hello@hurairahtools.com
+- Email: abuhurx@gmail.com
 
 ---
 
