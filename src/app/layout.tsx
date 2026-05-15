@@ -25,10 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: 'HurairahTools — Free Browser Tools by M Abu Hurairah',
-  description: `47 free PDF, image, developer, and university tools
-    built by M Abu Hurairah, a Full-Stack Developer and CS student
-    at UCP. Everything runs in your browser — no uploads, no signup,
-    no tracking.`,
+  description: `47 free PDF, image, developer, and university tools built by M Abu Hurairah, a Full-Stack Developer and CS student at UCP. Everything runs in your browser — no uploads, no signup, no tracking.`,
   keywords: [
     'M Abu Hurairah',
     'HurairahTools',
@@ -49,6 +46,16 @@ export const metadata: Metadata = {
     siteName: 'HurairahTools',
     type: 'website',
   },
+  icons: [
+    { rel: 'icon', url: '/favicon.ico', sizes: 'any' },
+    { rel: 'icon', url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+    { rel: 'icon', url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+    { rel: 'icon', url: '/favicon-48x48.png', type: 'image/png', sizes: '48x48' },
+    { rel: 'icon', url: '/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+    { rel: 'icon', url: '/android-chrome-192x192.png', type: 'image/png', sizes: '192x192' },
+    { rel: 'icon', url: '/android-chrome-512x512.png', type: 'image/png', sizes: '512x512' },
+    { rel: 'apple-touch-icon', url: '/apple-touch-icon.png', sizes: '180x180' },
+  ],
 };
 
 export default function RootLayout({

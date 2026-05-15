@@ -33,23 +33,23 @@ export function ToolGrid() {
             <p className="mt-2 text-[#4A6B55]">Select a category or search for exactly what you need.</p>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-2 rounded-full border border-[#D8ECD9] bg-white p-1">
-            {categories.map((cat) => (
-              <button
-                key={cat.value}
-                onClick={() => setActiveTab(cat.value)}
-                className={cn(
-                  'rounded-full px-4 py-2 text-xs font-medium transition-all tracking-wider',
-                  activeTab === cat.value
-                    ? 'bg-[#1A6B3A] text-white'
-                    : 'text-[#4A6B55] border border-[#D8ECD9] hover:border-[#1A6B3A] hover:text-[#0A2415]'
-                )}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
+{/* Filter Tabs */}
+           <div className="inline-flex flex-wrap justify-center gap-1.5 rounded-full border border-[#D8ECD9] bg-white p-1.5">
+             {categories.map((cat) => (
+               <button
+                 key={cat.value}
+                 onClick={() => setActiveTab(cat.value)}
+                 className={cn(
+                   'rounded-full px-3.5 py-[5px] text-[11px] font-semibold tracking-wide transition-all',
+                   activeTab === cat.value
+                     ? 'bg-[#1A6B3A] text-white shadow-sm'
+                     : 'text-[#4A6B55] border border-[#D8ECD9] hover:border-[#1A6B3A] hover:text-[#0A2415]'
+                 )}
+               >
+                 {cat.label}
+               </button>
+             ))}
+           </div>
         </div>
 
         {/* Grid */}
