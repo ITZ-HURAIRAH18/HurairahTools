@@ -2,6 +2,7 @@ import Hero from '@/components/sections/Hero';
 import { ToolGrid } from '@/components/sections/ToolGrid';
 import { WhySection } from '@/components/sections/WhySection';
 import { UniSpotlight } from '@/components/sections/UniSpotlight';
+import DeveloperFloatingCard from '@/components/DeveloperFloatingCard';
 
 export default function Home() {
   return (
@@ -10,7 +11,10 @@ export default function Home() {
       <ToolGrid />
       <WhySection />
       <UniSpotlight />
-      
+
+      {/* Developer Floating Card */}
+      <DeveloperFloatingCard />
+
       {/* SECTION 5 — Trust Banner */}
       <section className="w-full bg-surface-2 py-8 border-t border-border/50 text-center px-4">
         <div className="mx-auto max-w-4xl rounded-xl border border-success/20 bg-success/5 p-4 sm:p-6 shadow-sm">

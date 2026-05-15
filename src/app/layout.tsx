@@ -24,8 +24,31 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'UniToolKit - Every tool a student actually needs',
-  description: '47 free tools across PDF, Image, Developer, and University categories. All running in your browser.',
+  title: 'HurairahTools — Free Browser Tools by M Abu Hurairah',
+  description: `47 free PDF, image, developer, and university tools
+    built by M Abu Hurairah, a Full-Stack Developer and CS student
+    at UCP. Everything runs in your browser — no uploads, no signup,
+    no tracking.`,
+  keywords: [
+    'M Abu Hurairah',
+    'HurairahTools',
+    'Abu Hurairah developer',
+    'free PDF tools',
+    'browser tools no upload',
+    'student tools free',
+    'GPA calculator online',
+    'citation generator free',
+    'UCP developer portfolio',
+  ],
+  authors: [{ name: 'M Abu Hurairah', url: 'https://abuhurairah.engineer' }],
+  creator: 'M Abu Hurairah',
+  openGraph: {
+    title: 'HurairahTools by M Abu Hurairah',
+    description: '47 free tools. All run in your browser. Built by a student.',
+    url: 'https://hurairahtools.vercel.app',
+    siteName: 'HurairahTools',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({

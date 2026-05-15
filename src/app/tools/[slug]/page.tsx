@@ -73,6 +73,30 @@ export default async function ToolPage({ params }: ToolPageProps) {
           <div className="w-full">
             <ToolRenderer slug={slug} />
           </div>
+
+          {/* Developer Credit */}
+          <div className="mt-[48px] pt-[20px] border-t border-[#D5EDD9] flex items-center justify-between">
+            <span className="text-xs text-[#9AB8A0]">
+              Built by{' '}
+              <a
+                href="https://abuhurairah.engineer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1A6B3A] font-semibold no-underline"
+              >
+                M Abu Hurairah
+              </a>{' '}
+              · This tool runs 100% in your browser
+            </span>
+            <a
+              href="https://abuhurairah.engineer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[#1A6B3A] font-semibold no-underline"
+            >
+              View Portfolio ↗
+            </a>
+          </div>
         </div>
       </main>
     </div>

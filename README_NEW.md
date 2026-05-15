@@ -264,4 +264,4 @@ Have suggestions? Found a bug? Questions about a tool?
 
 **Built with ❤️ by M Abu Hurairah**
 
-*Because every student deserves free, powerful tools. No catch. No compromise. Forever.* 
+*Because every student deserves free, powerful tools. No catch. No compromise. Forever.*
