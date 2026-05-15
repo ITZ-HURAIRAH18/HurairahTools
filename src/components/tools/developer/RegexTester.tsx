@@ -9,7 +9,7 @@ import { Search } from 'lucide-react';
 export function RegexTester() {
   const [regexStr, setRegexStr] = useState('[a-zA-Z]+');
   const [flags, setFlags] = useState('g');
-  const [testString, setTestString] = useState('Hello World 123! This is a test string for UniToolKit.');
+  const [testString, setTestString] = useState('Hello World 123! This is a test string for HurairahToolsKit.');
   const [error, setError] = useState<string | null>(null);
   
   // Create RegExp object safely

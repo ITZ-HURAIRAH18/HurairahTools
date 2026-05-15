@@ -56,7 +56,7 @@ export default function PomodoroTimer() {
 
     // Notification
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('UniToolKit Pomodoro', {
+      new Notification('HurairahToolsKit Pomodoro', {
         body:
           sessionType === 'work'
             ? 'Great work! Take a break.'

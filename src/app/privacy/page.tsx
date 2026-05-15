@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 
 export const metadata = {
-  title: 'Privacy Policy - UniToolKit',
-  description: 'Privacy policy for UniToolKit - learn how we protect your data.',
+  title: 'Privacy Policy - HurairahToolsKit',
+  description: 'Privacy policy for HurairahToolsKit - learn how we protect your data.',
 };
 
 export default function PrivacyPage() {
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
 
           {/* How It Works */}
           <section>
-            <h2 className="text-2xl font-bold text-text mb-4">How UniToolKit Works (Technically)</h2>
+            <h2 className="text-2xl font-bold text-text mb-4">How HurairahToolsKit Works (Technically)</h2>
             <div className="bg-surface rounded-lg p-6 space-y-4 text-text-muted">
               <p>
                 Every tool runs entirely in your browser using Web APIs and WebAssembly:

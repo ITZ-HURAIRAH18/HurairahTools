@@ -1,8 +1,8 @@
-# UniToolKit 🛠️
+# HurairahToolsKit 🛠️
 
 **Every tool a student actually needs. All in one tab. Forever free.**
 
-UniToolKit is a free, privacy-first browser toolkit built for university students and developers. 47 powerful utilities for PDF, image, developer, and academic tasks—all running locally in your browser with **zero server uploads, zero accounts, zero tracking**.
+HurairahToolsKit is a free, privacy-first browser toolkit built for university students and developers. 47 powerful utilities for PDF, image, developer, and academic tasks—all running locally in your browser with **zero server uploads, zero accounts, zero tracking**.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)

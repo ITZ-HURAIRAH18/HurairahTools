@@ -23,7 +23,7 @@ export function WhySection() {
     <section id="why-unitoolkit" className="w-full bg-[#EEF7F1] px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-16">
-<h2 className="font-display text-4xl font-bold text-[#0A2415] sm:text-5xl">Why use UniToolKit?</h2>
+<h2 className="font-display text-4xl font-bold text-[#0A2415] sm:text-5xl">Why use HurairahToolsKit?</h2>
            <p className="mt-4 text-lg text-[#3D6B4F]">Fast, free, and incredibly secure.</p>
         </div>
 
