@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   icons: [
-    { rel: 'icon', url: '/favicon.ico', sizes: 'any' },
+    { rel: 'icon', url: '/favicon.svg', sizes: 'any' },
     { rel: 'icon', url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
     { rel: 'icon', url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
     { rel: 'icon', url: '/favicon-48x48.png', type: 'image/png', sizes: '48x48' },
