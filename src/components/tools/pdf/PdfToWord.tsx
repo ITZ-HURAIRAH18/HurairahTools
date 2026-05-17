@@ -37,31 +37,99 @@ export function PdfToWord() {
       for (let i = 1; i <= totalPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
-        
-        // Very basic text extraction, grouping by lines based on Y position
+
         const textItems = textContent.items as any[];
         let lastY: number | null = null;
-        let currentLine = '';
+        let currentLineItems: { str: string; x: number; fontScale: number }[] = [];
+        let currentLineStartX: number | null = null;
+
+        const flushLine = (items: { str: string; x: number; fontScale: number }[], align: 'left' | 'center' | 'right') => {
+          if (items.length === 0) return;
+
+          // Build the text run preserving per-character PDF spacing via non-breaking spaces
+          let fullText = items[0].str;
+          for (let k = 1; k < items.length; k++) {
+            const prev = items[k - 1];
+            const curr = items[k];
+            const gap = curr.x - (prev.x + prev.str.length * prev.fontScale);
+            if (gap > prev.fontScale * 0.5) {
+              const extraSpaces = Math.max(1, Math.round(gap / prev.fontScale));
+              fullText += '\u00A0'.repeat(extraSpaces);
+            }
+            fullText += curr.str;
+          }
+
+          // Determine a representative font size from the line's items
+          const sizes = items.map(it => it.fontScale);
+          const avgFontSize = Math.round(sizes.reduce((a, b) => a + b, 0) / sizes.length);
+
+          docChildren.push(new Paragraph({
+            alignment: align,
+            spacing: { after: 60 },
+            children: [
+              new TextRun({
+                text: fullText,
+                font: 'Courier New',
+                size: avgFontSize * 2,
+              }),
+            ],
+          }));
+        };
 
         for (const item of textItems) {
-          if (lastY !== null && Math.abs(item.transform[5] - lastY) > 5) {
-            if (currentLine.trim()) {
-              docChildren.push(new Paragraph({
-                children: [new TextRun(currentLine)],
-              }));
+          if (item.str.trim() === '') continue;
+
+          const y = item.transform[5];
+          const x = item.transform[4];
+          const fontScale = item.transform[0];
+
+          // New line detection: Y changed significantly
+          if (lastY !== null && Math.abs(y - lastY) > 5) {
+            // Determine alignment from the line's starting X position relative to page center
+            const pageWidth = page.view[2];
+            const center = pageWidth / 2;
+            let align: 'left' | 'center' | 'right' = 'left';
+            if (currentLineStartX !== null) {
+              const lineEndX = currentLineItems.length > 0
+                ? currentLineItems[currentLineItems.length - 1].x + currentLineItems[currentLineItems.length - 1].str.length * currentLineItems[currentLineItems.length - 1].fontScale
+                : currentLineStartX;
+              const lineMid = (currentLineStartX + lineEndX) / 2;
+              const distFromCenter = Math.abs(lineMid - center);
+              if (distFromCenter < pageWidth * 0.08) {
+                align = 'center';
+              } else if (currentLineStartX > pageWidth * 0.5) {
+                align = 'right';
+              }
             }
-            currentLine = '';
+            flushLine(currentLineItems, align);
+            currentLineItems = [];
+            currentLineStartX = null;
           }
-          currentLine += item.str;
-          lastY = item.transform[5];
+
+          if (currentLineStartX === null) currentLineStartX = x;
+          currentLineItems.push({ str: item.str, x, fontScale });
+          lastY = y;
         }
 
-        if (currentLine.trim()) {
-          docChildren.push(new Paragraph({ children: [new TextRun(currentLine)] }));
+        // Flush remaining items on the page
+        if (currentLineItems.length > 0) {
+          const pageWidth = page.view[2];
+          const center = pageWidth / 2;
+          let align: 'left' | 'center' | 'right' = 'left';
+          if (currentLineStartX !== null) {
+            const lineEndX = currentLineItems[currentLineItems.length - 1].x + currentLineItems[currentLineItems.length - 1].str.length * currentLineItems[currentLineItems.length - 1].fontScale;
+            const lineMid = (currentLineStartX + lineEndX) / 2;
+            const distFromCenter = Math.abs(lineMid - center);
+            if (distFromCenter < pageWidth * 0.08) {
+              align = 'center';
+            } else if (currentLineStartX > pageWidth * 0.5) {
+              align = 'right';
+            }
+          }
+          flushLine(currentLineItems, align);
         }
 
-        // Add page break logic if needed, skipping for simple extraction
-        docChildren.push(new Paragraph({ text: '' })); // Spacing between pages
+        docChildren.push(new Paragraph({ children: [] })); // Spacing between pages
 
         setProgress(Math.round((i / totalPages) * 100));
       }
