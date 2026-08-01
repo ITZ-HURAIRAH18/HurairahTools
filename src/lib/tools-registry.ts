@@ -8,6 +8,7 @@ export const tools: Tool[] = [
   { slug: 'pdf-to-jpg', title: 'PDF to JPG', description: 'Convert PDF pages into high-quality JPG images.', category: 'pdf', icon: 'Image', tags: ['pdf', 'jpg', 'convert', 'image'] },
   { slug: 'jpg-to-pdf', title: 'JPG to PDF', description: 'Convert multiple images into a single PDF.', category: 'pdf', icon: 'FileImage', tags: ['jpg', 'png', 'image', 'pdf', 'convert'] },
   { slug: 'pdf-to-word', title: 'PDF to Word', description: 'Extract text from PDF and export as .docx.', category: 'pdf', icon: 'FileText', tags: ['pdf', 'word', 'docx', 'convert', 'text'] },
+  { slug: 'word-to-pdf', title: 'Word to PDF', description: 'Convert Word document (.docx) to PDF.', category: 'pdf', icon: 'FileText', tags: ['word', 'docx', 'pdf', 'convert'] },
   { slug: 'pdf-to-excel', title: 'PDF to Excel', description: 'Extract table data from PDF to an Excel file.', category: 'pdf', icon: 'Table', tags: ['pdf', 'excel', 'spreadsheet', 'xlsx', 'table'] },
   { slug: 'pdf-rotate', title: 'PDF Rotate', description: 'Rotate pages in a PDF document.', category: 'pdf', icon: 'RotateCw', tags: ['pdf', 'rotate', 'turn'] },
   { slug: 'pdf-delete-pages', title: 'Delete PDF Pages', description: 'Remove specific pages from a PDF document.', category: 'pdf', icon: 'FileMinus2', tags: ['pdf', 'delete', 'remove', 'pages'] },

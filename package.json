@@ -20,6 +20,7 @@
     "date-fns": "^3.0.0",
     "diff": "^5.1.0",
     "docx": "^8.0.0",
+    "docx-preview": "^0.4.0",
     "exifr": "^7.1.0",
     "framer-motion": "^11.0.0",
     "heic2any": "^0.0.4",

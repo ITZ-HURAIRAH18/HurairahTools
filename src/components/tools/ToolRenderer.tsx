@@ -10,6 +10,7 @@ const componentMap: Record<string, any> = {
   'pdf-to-jpg': dynamic(() => import('@/components/tools/pdf/PdfToJpg').then(mod => mod.PdfToJpg), { ssr: false, loading: () => <Skeleton height="h-64" /> }),
   'jpg-to-pdf': dynamic(() => import('@/components/tools/pdf/JpgToPdf').then(mod => mod.JpgToPdf), { ssr: false, loading: () => <Skeleton height="h-64" /> }),
   'pdf-to-word': dynamic(() => import('@/components/tools/pdf/PdfToWord').then(mod => mod.PdfToWord), { ssr: false, loading: () => <Skeleton height="h-64" /> }),
+  'word-to-pdf': dynamic(() => import('@/components/tools/pdf/WordToPdf').then(mod => mod.WordToPdf), { ssr: false, loading: () => <Skeleton height="h-64" /> }),
   'pdf-to-excel': dynamic(() => import('@/components/tools/pdf/PdfToExcel').then(mod => mod.PdfToExcel), { ssr: false, loading: () => <Skeleton height="h-64" /> }),
   'pdf-rotate': dynamic(() => import('@/components/tools/pdf/PdfRotate').then(mod => mod.PdfRotate), { ssr: false, loading: () => <Skeleton height="h-64" /> }),
   'pdf-delete-pages': dynamic(() => import('@/components/tools/pdf/PdfDeletePages').then(mod => mod.PdfDeletePages), { ssr: false, loading: () => <Skeleton height="h-64" /> }),
