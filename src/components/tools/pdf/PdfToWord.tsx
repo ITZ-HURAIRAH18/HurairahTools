@@ -148,7 +148,7 @@ export function PdfToWord() {
               font: fontInfo.family,
               size: fontSize,
               bold: fontInfo.bold,
-              italic: fontInfo.italic,
+              italics: fontInfo.italic,
             }));
           }
 
