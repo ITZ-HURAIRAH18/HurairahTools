@@ -11,7 +11,7 @@ HurairahToolsKit is a free, privacy-first browser toolkit built for university s
 
 ---
 
-## ✨ Key Fea
+## ✨ Key Features
 
 🔒 **100% Privacy-First**  
 All processing happens in your browser. Files never leave your device. No backend. No logins. No tracking.
